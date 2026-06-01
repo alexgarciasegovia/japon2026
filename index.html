@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Japón 🇯🇵">
+<title>Japón 2026 🇯🇵</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C0392B;
+    --red-dark: #922B21;
+    --red-light: #E8A09A;
+    --cream: #FAF7F2;
+    --ink: #1A1410;
+    --ink-mid: #3D3530;
+    --ink-light: #8C7B72;
+    --sand: #EDE8E0;
+    --sand-dark: #D4CFC5;
+    --white: #FFFFFF;
+    --green: #2E7D56;
+    --gold: #B8860B;
+    --blue-train: #1A5276;
+    --purple-bus: #6C3483;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ─── SCREENS ─── */
+  .screen { display: none; min-height: 100vh; padding-bottom: calc(70px + var(--safe-bottom)); }
+  .screen.active { display: block; }
+
+  /* ─── TOP BAR ─── */
+  .topbar {
+    background: var(--ink);
+    color: var(--cream);
+    padding: calc(var(--safe-top) + 14px) 20px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .topbar-title { font-family: 'Noto Serif JP', serif; font-size: 17px; font-weight: 700; letter-spacing: 0.02em; }
+  .topbar-sub { font-size: 11px; color: var(--ink-light); font-weight: 300; margin-top: 1px; }
+  .back-btn {
+    background: none; border: none; color: var(--cream); font-size: 22px; cursor: pointer;
+    display: flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+    padding: 4px 0;
+  }
+
+  /* ─── BOTTOM NAV ─── */
+  .bottomnav {
+    position: fixed;
+    bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px;
+    background: var(--ink);
+    display: flex;
+    padding-bottom: var(--safe-bottom);
+    z-index: 200;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-btn {
+    flex: 1; background: none; border: none; color: rgba(255,255,255,0.4);
+    padding: 10px 0 8px; cursor: pointer; display: flex; flex-direction: column;
+    align-items: center; gap: 3px; transition: color 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .nav-btn.active { color: var(--red-light); }
+  .nav-btn svg { width: 22px; height: 22px; }
+  .nav-btn span { font-size: 10px; font-weight: 500; }
+
+  /* ─── HOME SCREEN ─── */
+  .home-hero {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 32px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .home-hero::before {
+    content: '⛩';
+    position: absolute;
+    font-size: 160px;
+    opacity: 0.05;
+    top: -20px; right: -20px;
+    pointer-events: none;
+  }
+  .countdown-num {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 80px;
+    font-weight: 700;
+    color: var(--red-light);
+    line-height: 1;
+  }
+  .countdown-label { font-size: 13px; color: var(--ink-light); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+  .trip-dates { font-size: 14px; color: var(--sand); margin-top: 12px; font-weight: 300; }
+
+  .home-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 20px 16px;
+  }
+  .stat-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid var(--sand-dark);
+  }
+  .stat-card .num { font-size: 28px; font-weight: 600; color: var(--ink); font-family: 'Noto Serif JP', serif; }
+  .stat-card .lbl { font-size: 11px; color: var(--ink-light); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .quick-section { padding: 0 16px 16px; }
+  .section-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-light); margin-bottom: 10px; padding: 0 4px; }
+
+  .quick-flight {
+    background: var(--ink);
+    border-radius: 14px;
+    padding: 16px;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+  .flight-row { display: flex; align-items: center; justify-content: space-between; }
+  .flight-city { font-size: 22px; font-weight: 700; font-family: 'Noto Serif JP', serif; }
+  .flight-time { font-size: 13px; color: var(--ink-light); margin-top: 2px; }
+  .flight-arrow { color: var(--red-light); font-size: 18px; }
+  .flight-meta { font-size: 11px; color: var(--ink-light); margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; display: flex; gap: 16px; }
+  .flight-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .alert-card {
+    background: #FFF8E7;
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1px solid #F0D080;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-text { font-size: 13px; color: #7D5A00; line-height: 1.5; }
+  .alert-title { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+
+  /* ─── ITINERARY SCREEN ─── */
+  .itinerary-list { padding: 12px 16px; }
+
+  .day-card {
+    background: var(--white);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    border: 1px solid var(--sand-dark);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .day-card:active { transform: scale(0.98); }
+
+  .day-card-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 14px;
+  }
+  .day-badge {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .day-badge .day-num { font-size: 18px; font-weight: 700; line-height: 1; }
+  .day-badge .day-mon { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-light); }
+  .day-today .day-badge { background: var(--red); }
+  .day-past .day-badge { background: var(--sand-dark); }
+  .day-past .day-badge .day-num { color: var(--ink-light); }
+
+  .day-info { flex: 1; min-width: 0; }
+  .day-info-top { display: flex; align-items: center; justify-content: space-between; }
+  .day-city { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .day-label { font-size: 11px; color: var(--ink-light); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+  .day-tags { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+  .tag {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .tag-train { background: #D6E8F5; color: #1A5276; }
+  .tag-bus { background: #EBD9F8; color: #6C3483; }
+  .tag-fly { background: #D9F0E8; color: #1A6B45; }
+  .tag-ferry { background: #FDE8CC; color: #935116; }
+  .tag-check { background: #FDECEA; color: #C0392B; }
+  .tag-free { background: #EEF0F3; color: #5D6D7E; }
+  .tag-hotel { background: #F4ECD8; color: #7D5A00; }
+
+  .day-arrow { color: var(--sand-dark); font-size: 16px; }
+
+  /* ─── DAY DETAIL ─── */
+  #detail-screen { background: var(--cream); }
+  .detail-topbar {
+    background: var(--ink);
+    color: var(--cream);
+    padding: calc(var(--safe-top) + 12px) 16px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .detail-topbar-row { display: flex; align-items: center; gap: 12px; }
+  .detail-date { font-size: 12px; color: var(--ink-light); margin-top: 4px; }
+  .detail-city { font-size: 22px; font-weight: 700; font-family: 'Noto Serif JP', serif; }
+
+  .detail-content { padding: 16px; }
+
+  .detail-section { margin-bottom: 20px; }
+  .detail-section-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-light);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .detail-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--sand-dark);
+  }
+
+  .transport-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid var(--sand-dark);
+    margin-bottom: 8px;
+  }
+  .transport-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .transport-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .transport-icon.train { background: #D6E8F5; }
+  .transport-icon.bus { background: #EBD9F8; }
+  .transport-icon.fly { background: #D9F0E8; }
+  .transport-icon.ferry { background: #FDE8CC; }
+  .transport-icon.walk { background: var(--sand); }
+  .transport-route { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .transport-time { font-size: 12px; color: var(--ink-light); margin-top: 1px; }
+  .transport-detail {
+    font-size: 12px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-top: 6px;
+    border-left: 3px solid var(--sand-dark);
+  }
+
+  .hotel-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid var(--sand-dark);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hotel-icon { font-size: 24px; }
+  .hotel-name { font-size: 14px; font-weight: 600; }
+  .hotel-price { font-size: 12px; color: var(--ink-light); margin-top: 2px; }
+  .hotel-paid { font-size: 11px; color: var(--green); font-weight: 500; margin-top: 1px; }
+
+  .task-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid var(--sand-dark);
+  }
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--sand);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-mid);
+  }
+  .task-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .task-item:first-child { padding-top: 0; }
+  .task-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); flex-shrink: 0; margin-top: 5px; }
+
+  .activity-card {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 14px;
+  }
+  .activity-text { font-size: 14px; line-height: 1.6; }
+
+  /* ─── NOTES ─── */
+  .notes-screen { padding: 16px; }
+  .note-input-area {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid var(--sand-dark);
+    margin-bottom: 16px;
+  }
+  .note-input-area textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    resize: none;
+    min-height: 80px;
+    line-height: 1.6;
+  }
+  .note-input-area textarea::placeholder { color: var(--ink-light); }
+  .note-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--sand); }
+  .note-day-select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    border: 1px solid var(--sand-dark);
+    border-radius: 8px;
+    padding: 5px 8px;
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+  }
+  .save-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .save-btn:active { opacity: 0.8; }
+
+  .note-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid var(--sand-dark);
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .note-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .note-day-label { font-size: 11px; font-weight: 600; color: var(--red); text-transform: uppercase; letter-spacing: 0.08em; }
+  .note-date-label { font-size: 11px; color: var(--ink-light); }
+  .note-text { font-size: 14px; color: var(--ink-mid); line-height: 1.6; }
+  .note-delete { background: none; border: none; color: var(--ink-light); cursor: pointer; font-size: 18px; padding: 2px; }
+
+  .empty-notes {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--ink-light);
+  }
+  .empty-notes .emoji { font-size: 48px; margin-bottom: 12px; }
+  .empty-notes p { font-size: 14px; line-height: 1.6; }
+
+  /* ─── DOCS ─── */
+  .docs-screen { padding: 16px; }
+  .doc-group { margin-bottom: 20px; }
+  .doc-card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--sand-dark);
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .doc-header {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .doc-icon { font-size: 24px; }
+  .doc-title { font-size: 14px; font-weight: 600; flex: 1; }
+  .doc-subtitle { font-size: 12px; color: var(--ink-light); margin-top: 1px; }
+  .doc-chevron { color: var(--ink-light); font-size: 18px; transition: transform 0.2s; }
+  .doc-card.open .doc-chevron { transform: rotate(180deg); }
+  .doc-body {
+    display: none;
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--sand);
+  }
+  .doc-card.open .doc-body { display: block; }
+  .doc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--sand);
+    gap: 12px;
+  }
+  .doc-row:last-child { border-bottom: none; }
+  .doc-key { font-size: 12px; color: var(--ink-light); flex-shrink: 0; min-width: 100px; }
+  .doc-val { font-size: 13px; font-weight: 500; text-align: right; color: var(--ink); word-break: break-all; }
+  .doc-val.mono { font-family: 'Courier New', monospace; font-size: 12px; background: var(--cream); padding: 3px 6px; border-radius: 5px; }
+  .doc-val.ref { color: var(--blue-train); font-weight: 600; }
+
+  /* ─── FIREBASE SYNC ─── */
+  .sync-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--ink-light);
+    padding: 8px 0;
+  }
+  .sync-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--sand-dark);
+  }
+  .sync-dot.synced { background: var(--green); }
+  .sync-dot.syncing { background: var(--gold); animation: pulse 1s infinite; }
+  .sync-dot.error { background: var(--red); }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  /* ─── PILLS / MISC ─── */
+  .chip {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    margin: 2px;
+  }
+
+  /* ─── SCROLL ─── */
+  ::-webkit-scrollbar { display: none; }
+  /* ─── PASSWORD SCREEN ─── */
+  #lock-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 40px 32px;
+  }
+  #lock-screen.hidden { display: none; }
+  .lock-torii { font-size: 64px; margin-bottom: 24px; }
+  .lock-title { font-family: 'Noto Serif JP', serif; font-size: 26px; color: var(--cream); margin-bottom: 6px; }
+  .lock-sub { font-size: 13px; color: var(--ink-light); margin-bottom: 36px; }
+  .lock-input {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    color: var(--cream);
+    text-align: center;
+    letter-spacing: 0.15em;
+    outline: none;
+    margin-bottom: 14px;
+  }
+  .lock-input::placeholder { color: rgba(255,255,255,0.2); letter-spacing: 0.05em; font-size: 14px; }
+  .lock-input:focus { border-color: var(--red-light); }
+  .lock-btn {
+    width: 100%;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .lock-btn:active { opacity: 0.8; }
+  .lock-error { font-size: 13px; color: var(--red-light); margin-top: 12px; min-height: 18px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LOCK SCREEN ═══════════════ -->
+<div id="lock-screen">
+  <div class="lock-torii">⛩</div>
+  <div class="lock-title">Japón 2026</div>
+  <div class="lock-sub">Alex & Emma · Jun–Jul 2026</div>
+  <input class="lock-input" type="password" id="lock-input" placeholder="Contraseña" autocomplete="off" />
+  <button class="lock-btn" onclick="checkPassword()">Entrar</button>
+  <div class="lock-error" id="lock-error"></div>
+</div>
+
+<!-- ═══════════════ HOME SCREEN ═══════════════ -->
+<div id="home-screen" class="screen active">
+  <div class="home-hero">
+    <div class="countdown-num" id="countdown-days">19</div>
+    <div class="countdown-label">días para Japón</div>
+    <div class="trip-dates">20 jun — 11 jul 2026 · 22 días</div>
+  </div>
+
+  <div class="home-stats">
+    <div class="stat-card">
+      <div class="num">12</div>
+      <div class="lbl">Ciudades</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">22</div>
+      <div class="lbl">Noches</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">4</div>
+      <div class="lbl">Vuelos</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="home-notes-count">0</div>
+      <div class="lbl">Notas</div>
+    </div>
+  </div>
+
+  <div class="quick-section">
+    <div class="section-title">Próximo vuelo — ida</div>
+    <div class="quick-flight">
+      <div class="flight-row">
+        <div>
+          <div class="flight-city">BCN</div>
+          <div class="flight-time">12:10 · 20 jun</div>
+        </div>
+        <div class="flight-arrow">→</div>
+        <div style="text-align:center">
+          <div class="flight-city" style="font-size:16px;color:var(--ink-light)">PVG</div>
+          <div class="flight-time">Escala Shanghai</div>
+        </div>
+        <div class="flight-arrow">→</div>
+        <div style="text-align:right">
+          <div class="flight-city">KIX</div>
+          <div class="flight-time">15:25 · 21 jun</div>
+        </div>
+      </div>
+      <div class="flight-meta">
+        <span>✈ Air China</span>
+        <span>CA840 + CA857</span>
+        <span>Ref: QCS0M4</span>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:16px">Recordatorios</div>
+
+    <div class="alert-card">
+      <div class="alert-icon">🎫</div>
+      <div>
+        <div class="alert-title">SUICA — Día llegada Osaka</div>
+        <div class="alert-text">Gestionar tarjeta SUICA en el aeropuerto para trasladarte hasta la ciudad</div>
+      </div>
+    </div>
+
+    <div class="alert-card">
+      <div class="alert-icon">🚌</div>
+      <div>
+        <div class="alert-title">Bus Nohi (Shirakawa-go) — YA COMPRADO</div>
+        <div class="alert-text">Ida 08:50 · Vuelta 13:15 · 29 junio · Japan Bus Online</div>
+      </div>
+    </div>
+
+    <div class="alert-card">
+      <div class="alert-icon">🚄</div>
+      <div>
+        <div class="alert-title">Tren Kyoto→Takayama — YA RESERVADO</div>
+        <div class="alert-text">28 jun · Nozomi 236 · Vagón 4 · Asientos 5A + 5B · Reserva nº 47930</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ITINERARY SCREEN ═══════════════ -->
+<div id="itinerary-screen" class="screen">
+  <div class="topbar">
+    <div>
+      <div class="topbar-title">Itinerario 🗾</div>
+      <div class="topbar-sub">20 jun — 11 jul 2026</div>
+    </div>
+  </div>
+  <div class="itinerary-list" id="itinerary-list"></div>
+</div>
+
+<!-- ═══════════════ DETAIL SCREEN ═══════════════ -->
+<div id="detail-screen" class="screen">
+  <div class="detail-topbar">
+    <div class="detail-topbar-row">
+      <button class="back-btn" onclick="goBack()">← Volver</button>
+    </div>
+    <div class="detail-city" id="detail-city"></div>
+    <div class="detail-date" id="detail-date"></div>
+  </div>
+  <div class="detail-content" id="detail-content"></div>
+</div>
+
+<!-- ═══════════════ DOCS SCREEN ═══════════════ -->
+<div id="docs-screen" class="screen">
+  <div class="topbar">
+    <div>
+      <div class="topbar-title">Documentos 📄</div>
+      <div class="topbar-sub">Vuelos, trenes, reservas</div>
+    </div>
+  </div>
+  <div class="docs-screen" id="docs-content"></div>
+</div>
+
+<!-- ═══════════════ NOTES SCREEN ═══════════════ -->
+<div id="notes-screen" class="screen">
+  <div class="topbar">
+    <div>
+      <div class="topbar-title">Notas 📝</div>
+      <div class="topbar-sub" id="sync-label">Sincronizando...</div>
+    </div>
+    <div class="sync-status">
+      <div class="sync-dot syncing" id="sync-dot"></div>
+    </div>
+  </div>
+  <div class="notes-screen">
+    <div class="note-input-area">
+      <textarea id="note-textarea" placeholder="Escribe una nota, apunte de Google Maps, idea..." rows="3"></textarea>
+      <div class="note-actions">
+        <select class="note-day-select" id="note-day-select"></select>
+        <button class="save-btn" onclick="saveNote()">Guardar</button>
+      </div>
+    </div>
+    <div id="notes-list"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ BOTTOM NAV ═══════════════ -->
+<nav class="bottomnav">
+  <button class="nav-btn active" onclick="showScreen('home')" id="nav-home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Inicio</span>
+  </button>
+  <button class="nav-btn" onclick="showScreen('itinerary')" id="nav-itinerary">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Días</span>
+  </button>
+  <button class="nav-btn" onclick="showScreen('docs')" id="nav-docs">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    <span>Docs</span>
+  </button>
+  <button class="nav-btn" onclick="showScreen('notes')" id="nav-notes">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    <span>Notas</span>
+  </button>
+</nav>
+
+<script>
+// ═══════════════ PASSWORD ═══════════════
+const PASS = 'txara';
+const SESSION_KEY = 'japan2026_auth';
+
+function checkPassword() {
+  const val = document.getElementById('lock-input').value;
+  if (val === PASS) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    document.getElementById('lock-screen').classList.add('hidden');
+    document.getElementById('lock-input').value = '';
+  } else {
+    const err = document.getElementById('lock-error');
+    err.textContent = 'Contraseña incorrecta';
+    document.getElementById('lock-input').value = '';
+    setTimeout(() => err.textContent = '', 2000);
+  }
+}
+
+document.getElementById('lock-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+if (sessionStorage.getItem(SESSION_KEY) === '1') {
+  document.getElementById('lock-screen').classList.add('hidden');
+}
+
+// ═══════════════ TRIP DATA ═══════════════
+const TRIP_START = new Date('2026-06-20');
+const TODAY = new Date();
+
+const days = [
+  {
+    date: '2026-06-20', weekday: 'Sábado', num: 20, month: 'Jun',
+    city: 'Barcelona → Shanghai', label: 'Día de vuelo',
+    tags: ['fly'],
+    transport: [
+      { type: 'fly', route: 'BCN → PVG', time: '12:10 → 06:45 (+1)', detail: 'Air China CA840 · Ref QCS0M4\nTicket Emma: YYEZOL 999-6045139660\nTicket Alex: YYEZOL 999-6045139659' }
+    ],
+    hotel: null,
+    tasks: ['Llegar aeropuerto con tiempo (vuelo internacional)', 'Check-in online si posible', 'Reserva nº GoToGate: 1101-441-191'],
+    activity: 'Vuelo Barcelona → Shanghai Pudong. Escala en Shanghai.'
+  },
+  {
+    date: '2026-06-21', weekday: 'Domingo', num: 21, month: 'Jun',
+    city: 'Shanghai → Osaka', label: 'Llegada a Japón 🎌',
+    tags: ['fly', 'check'],
+    transport: [
+      { type: 'fly', route: 'PVG → KIX', time: '11:50 → 15:25', detail: 'Air China CA857 · Ref QCS0M4\nSalida ACTUALIZADA a 11:50 (antes 12:00)' },
+      { type: 'train', route: 'Aeropuerto KIX → Osaka ciudad', time: 'Aprox 70 min', detail: 'Gestionar SUICA en el aeropuerto antes del tren. Con SUICA se paga el tren.' }
+    ],
+    hotel: { name: 'Bestie Doyanen', price: '45,89€', paid: 'Emma' },
+    tasks: ['Gestionar tarjeta SUICA en KIX (para todos los transportes)', 'Comprar tren aeropuerto con SUICA'],
+    activity: 'Llegada a Osaka. Visitar Dotonbori por la noche.'
+  },
+  {
+    date: '2026-06-22', weekday: 'Lunes', num: 22, month: 'Jun',
+    city: 'Osaka', label: 'Universal Studios',
+    tags: ['train'],
+    transport: [
+      { type: 'train', route: 'Estación central Osaka → Universal City', time: '20 min', detail: 'Compra con SUICA en el momento (aprox 1,2€)' },
+      { type: 'train', route: 'Universal City → Estación central Osaka', time: '20 min', detail: 'Vuelta al centro' }
+    ],
+    hotel: { name: 'Bestie Doyanen', price: '45,89€', paid: 'Emma' },
+    tasks: ['Entrada Universal Studios — KLOOK (comprar el 21 por la tarde) · Precio: 55€-120€'],
+    activity: 'Universal Studio Japan por el día. Resto de Osaka por la noche.'
+  },
+  {
+    date: '2026-06-23', weekday: 'Martes', num: 23, month: 'Jun',
+    city: 'Osaka → Himeji → Hiroshima', label: 'Tren bala + Castillo',
+    tags: ['train', 'check'],
+    transport: [
+      { type: 'train', route: 'Osaka (Shin-Osaka) → Himeji', time: '30 min', detail: 'Shinkansen · Línea Sanyo · Tren Nozomi o Mizuho · cada 15 min · incluido en el pase' },
+      { type: 'train', route: 'Himeji → Hiroshima', time: '1h', detail: 'Shinkansen · Línea Sanyo · Tren Nozomi o Mizuho · cada 15 min · incluido en el pase' },
+      { type: 'bus', route: 'Dentro de Hiroshima', time: '', detail: 'OPCIÓN A: Meipuru-pu (Hiroshima Sightseeing Loop Bus) — incluido con el pass\nOPCIÓN B: Tranvía Hiroden' }
+    ],
+    hotel: { name: 'Hotel Patio Hiroshima', price: '65,29€', paid: 'Alex' },
+    tasks: [
+      'ACTIVAR Kansai-Hiroshima Area Pass (Día 1 de 5)',
+      'Comprar entrada Castillo Himeji (reservar lo antes posible)',
+      'Entrada Museo de la Paz Hiroshima (comprar días antes)',
+      'Free tour Hiroshima — GuruWalk / Civitatis (reservar 2 semanas antes)'
+    ],
+    activity: 'Visita Castillo Himeji a las 9:00am (compra ONLINE). Free tour Hiroshima + Museo bomba atómica.'
+  },
+  {
+    date: '2026-06-24', weekday: 'Miércoles', num: 24, month: 'Jun',
+    city: 'Hiroshima → Miyajima → Hiroshima', label: 'Isla de Miyajima',
+    tags: ['train', 'ferry'],
+    transport: [
+      { type: 'train', route: 'Hiroshima → Miyajimaguchi', time: '25 min', detail: 'JR Sanyo Main Line (dirección Iwakuni) · cada 15 min · incluido en el pase' },
+      { type: 'ferry', route: 'Miyajimaguchi → Miyajima', time: '10 min', detail: 'JR West Miyajima Ferry · incluido en el pase' },
+      { type: 'ferry', route: 'Miyajima → Miyajimaguchi', time: '10 min', detail: 'JR West Miyajima Ferry' },
+      { type: 'train', route: 'Miyajimaguchi → Hiroshima', time: '25 min', detail: 'JR Sanyo Main Line' }
+    ],
+    hotel: { name: 'Hotel Patio Hiroshima', price: '65,29€', paid: 'Alex' },
+    tasks: ['Tasa visitante Miyajima (pagar ahí)', 'Santuario Itsukushima (pagar ahí)'],
+    activity: 'Día completo en Miyajima. Torii flotante del Santuario Itsukushima.'
+  },
+  {
+    date: '2026-06-25', weekday: 'Jueves', num: 25, month: 'Jun',
+    city: 'Hiroshima → Kyoto', label: 'Llegada a Kyoto',
+    tags: ['train', 'check'],
+    transport: [
+      { type: 'train', route: 'Hiroshima → Shin-Osaka', time: '1h 25min', detail: 'Tren Nozomi · reservar asiento en máquinas JR (incluido en el pase, cada 3-4 por hora)' },
+      { type: 'train', route: 'Shin-Osaka → Kyoto', time: '25 min', detail: '⚠️ ATENCIÓN: Seguir carteles amarillos "Transfer to JR Lines"\nPasar JR Pass por tornos internos. Buscar andén Línea JR Kyoto.\nCoger SOLO "Special Rapid Service" (Shin-Kaisoku). NO coger "Local".' }
+    ],
+    hotel: { name: 'Resi Stay Yasaka', price: '161,66€', paid: 'Alex' },
+    tasks: ['Entrada templo Kiyomizu-dera (comprar ahí)'],
+    activity: 'Gion: Hanamikoji, Santuario Yasaka. Higashiyama: Sannenzaka, Ichinenzaka, Nanenzaka y Templo Kiyomizu-dera.'
+  },
+  {
+    date: '2026-06-26', weekday: 'Viernes', num: 26, month: 'Jun',
+    city: 'Kyoto', label: 'Fushimi Inari',
+    tags: ['free'],
+    transport: [],
+    hotel: { name: 'Resi Stay Yasaka', price: '161,66€', paid: 'Alex' },
+    tasks: [],
+    activity: 'Fushimi Inari Taisha ⛩ y calles adyacentes con mercaditos. Bosque de Bambú de Arashiyama.'
+  },
+  {
+    date: '2026-06-27', weekday: 'Sábado', num: 27, month: 'Jun',
+    city: 'Kyoto', label: 'Pabellón Dorado',
+    tags: ['free'],
+    transport: [],
+    hotel: { name: 'Resi Stay Yasaka', price: '161,66€', paid: 'Alex' },
+    tasks: [],
+    activity: 'Pabellón Dorado (Kinkaku-ji). Ryōan-ji, Ninna-ji. Pontocho por la noche.'
+  },
+  {
+    date: '2026-06-28', weekday: 'Domingo', num: 28, month: 'Jun',
+    city: 'Kyoto → Takayama', label: 'Pueblo de montaña',
+    tags: ['train', 'check'],
+    transport: [
+      { type: 'train', route: 'Kyoto → Nagoya', time: '30 min', detail: '🚄 RESERVADO: Nozomi 236 · Salida 07:30\nVagón 4 · Asiento 5-A (Alex) + 5-B (Emma)\nRecogida ticket: www.westjr.co.jp · PIN: 2311\nReserva nº 47930 · Receipt: ADV4069K' },
+      { type: 'train', route: 'Nagoya → Takayama', time: '2h 15min', detail: '🚂 RESERVADO: Hida 3 · Salida 08:43\nVagón 8 · Asiento 12-C (Alex) + 12-D (Emma)\nPedir LADO DERECHO — vistas al río y desfiladeros\nTransbordo 39 min en Nagoya: buscar carteles amarillos "Transfer to JR Lines"\nMeter los DOS billetes a la vez en los tornos.' }
+    ],
+    hotel: { name: 'Hostel Murasaki', price: '66,12€', paid: 'Alex' },
+    tasks: ['Recoger billetes tren en máquina JR (llevar tarjeta Visa acabada en 2010 y PIN 2311)', 'Envío de maleta por Yamato Transport (logo gato negro) aprox 15€/maleta'],
+    activity: 'Día completo en Takayama. Calles Sannomachi, mercado Jinya-mae.'
+  },
+  {
+    date: '2026-06-29', weekday: 'Lunes', num: 29, month: 'Jun',
+    city: 'Takayama → Shirakawa-go → Takayama', label: 'Pueblo de nieve',
+    tags: ['bus', 'check'],
+    transport: [
+      { type: 'bus', route: 'Takayama → Shirakawa-go', time: '50 min', detail: '✅ COMPRADO: Nohi Bus · Salida 08:50 desde Takayama Nohi Bus Center\nLlegar 15 min antes como mínimo' },
+      { type: 'bus', route: 'Shirakawa-go → Takayama', time: '50 min', detail: '✅ COMPRADO: Nohi Bus · Salida 13:15 · Llegada 14:15\nAlternativa: salida 14:15 si se necesita más tiempo' }
+    ],
+    hotel: { name: 'Hostel Murasaki', price: '66,12€', paid: 'Alex' },
+    tasks: ['Llevar confirmación bus Nohi (Japan Bus Online)', 'Aprovechar la tarde en Takayama al volver'],
+    activity: 'Excursión a Shirakawa-go. Casas gassho-zukuri con tejados de paja. Vuelta a Takayama por la tarde.'
+  },
+  {
+    date: '2026-06-30', weekday: 'Martes', num: 30, month: 'Jun',
+    city: 'Takayama → Kamikochi → Matsumoto', label: 'Valle alpino',
+    tags: ['bus', 'train'],
+    transport: [
+      { type: 'bus', route: 'Takayama → Hirayu Onsen', time: '60 min', detail: 'Takayama Nohi Bus Center · Billete combinado con parada en Hirayu Onsen\nSalen cada hora. RECOMENDADO: coger el de las 7:00 o 7:40' },
+      { type: 'bus', route: 'Hirayu Onsen → Kamikochi Bus Terminal', time: '25 min', detail: 'Bus lanzadera ecológico · Antes de la ruta RESERVAR billete terminal Alpico para volver a las 15:00-16:00. ⚠️ IMPORTANTE — SE LLENAN' },
+      { type: 'bus', route: 'Kamikochi → Shin-Shimashima', time: '65 min', detail: 'Bus Alpico' },
+      { type: 'train', route: 'Shin-Shimashima → Matsumoto', time: '30 min', detail: 'Tren local' }
+    ],
+    hotel: { name: 'Riokan Matsukaze', price: '43€', paid: '?' },
+    tasks: ['Reservar billete vuelta Alpico en cuanto lleguéis (se llenan)', 'Ruta del río Azusa: Terminal → Kappabashi → Puente Myojin (aprox 5-6h de trekking plano)'],
+    activity: 'Trekking en Kamikochi. Valle alpino con el río Azusa cristalino. Después, Matsumoto.'
+  },
+  {
+    date: '2026-07-01', weekday: 'Miércoles', num: 1, month: 'Jul',
+    city: 'Matsumoto → Nagano', label: 'Castillo cuervo negro',
+    tags: ['train'],
+    transport: [
+      { type: 'train', route: 'Matsumoto → Nagano', time: '50 min', detail: 'Shinano Limited Express (opción 2: 1h30 tren local)' }
+    ],
+    hotel: { name: 'Gondo Aioi', price: '100,50€', paid: 'Emma' },
+    tasks: ['Entrada Castillo Matsumoto — 700 yenes (comprar ahí)'],
+    activity: 'Castillo cuervo negro de Matsumoto. Lago de "Your Name". Nagano por la tarde.'
+  },
+  {
+    date: '2026-07-02', weekday: 'Jueves', num: 2, month: 'Jul',
+    city: 'Nagano', label: 'Monos en onsen',
+    tags: ['bus'],
+    transport: [
+      { type: 'bus', route: 'Nagano → Jigokudani Park', time: '45 min', detail: 'Atobus express directo · Ir temprano para ver los monos' },
+      { type: 'bus', route: 'Jigokudani → Nagano', time: '45 min', detail: 'Atobus express directo' }
+    ],
+    hotel: { name: 'Gondo Aioi', price: '100,50€', paid: 'Emma' },
+    tasks: [],
+    activity: 'Parque de los monos en Jigokudani (Snow Monkeys). Monos en el onsen termal.'
+  },
+  {
+    date: '2026-07-03', weekday: 'Viernes', num: 3, month: 'Jul',
+    city: 'Nagano → Lago Kawaguchi', label: 'Ruta al Fuji',
+    tags: ['train'],
+    transport: [
+      { type: 'train', route: 'Nagano → Matsumoto', time: '50 min', detail: 'Shinano Limited Express · JR PASS' },
+      { type: 'train', route: 'Matsumoto → Otsuki', time: '1h 20min', detail: 'Limited Express Azusa · JR PASS' },
+      { type: 'train', route: 'Otsuki → Kawaguchiko', time: '50 min', detail: '⚠️ Fujikyu Railway — NO cubre el JR Pass, pagar aparte' }
+    ],
+    hotel: { name: 'Togawaso', price: '133,17€', paid: 'Alex' },
+    tasks: ['Pagar tren Otsuki→Kawaguchiko (Fujikyu, no JR Pass)'],
+    activity: 'Lago Kawaguchi. Bici por el lago. Kachi Kachi Ropeway para vistas del Fuji. Pagoda Chureito para el atardecer.'
+  },
+  {
+    date: '2026-07-04', weekday: 'Sábado', num: 4, month: 'Jul',
+    city: 'Lago Kawaguchi', label: 'Día libre',
+    tags: ['free'],
+    transport: [],
+    hotel: { name: 'Togawaso', price: '133,17€', paid: 'Alex' },
+    tasks: ['Valorar alquilar moto o coche', 'Preguntar tour bosque Aokigahara'],
+    activity: 'Tour bosque Aokigahara. Oshino Hakkai (pueblito tradicional). Tarde libre.'
+  },
+  {
+    date: '2026-07-05', weekday: 'Domingo', num: 5, month: 'Jul',
+    city: 'Lago Kawaguchi → Tokyo', label: 'Llegada a Tokyo',
+    tags: ['bus'],
+    transport: [
+      { type: 'bus', route: 'Kawaguchiko → Tokyo', time: '2h', detail: 'Bus directo a Tokyo (alternativa al tren)' }
+    ],
+    hotel: { name: 'APA Hotel Shinjuku Kabuchiko', price: '432€', paid: '?' },
+    tasks: [],
+    activity: 'Traslado a Tokyo. Team Labs. Explorar Shinjuku.'
+  },
+  {
+    date: '2026-07-06', weekday: 'Lunes', num: 6, month: 'Jul',
+    city: 'Tokyo', label: 'Día libre Tokyo',
+    tags: ['free'],
+    transport: [],
+    hotel: { name: 'APA Hotel Shinjuku Kabuchiko', price: '432€', paid: '?' },
+    tasks: [],
+    activity: 'Día libre en Tokyo. Por definir.'
+  },
+  {
+    date: '2026-07-07', weekday: 'Martes', num: 7, month: 'Jul',
+    city: 'Tokyo', label: 'Día libre Tokyo',
+    tags: ['free'],
+    transport: [],
+    hotel: { name: 'APA Hotel Shinjuku Kabuchiko', price: '432€', paid: '?' },
+    tasks: [],
+    activity: 'Día libre en Tokyo. Por definir.'
+  },
+  {
+    date: '2026-07-08', weekday: 'Miércoles', num: 8, month: 'Jul',
+    city: 'Tokyo', label: 'Día libre Tokyo',
+    tags: ['free'],
+    transport: [],
+    hotel: { name: 'APA Hotel Shinjuku Kabuchiko', price: '432€', paid: '?' },
+    tasks: [],
+    activity: 'Día libre en Tokyo. Por definir.'
+  },
+  {
+    date: '2026-07-09', weekday: 'Jueves', num: 9, month: 'Jul',
+    city: 'Tokyo', label: 'Kamakura o Nikko',
+    tags: ['train'],
+    transport: [],
+    hotel: { name: 'APA Hotel Shinjuku Kabuchiko', price: '432€', paid: '?' },
+    tasks: [],
+    activity: 'Excursión de día a Kamakura o Nikko. Por confirmar.'
+  },
+  {
+    date: '2026-07-10', weekday: 'Viernes', num: 10, month: 'Jul',
+    city: 'Tokyo → Seúl', label: 'Vuelo a Seúl',
+    tags: ['fly'],
+    transport: [
+      { type: 'fly', route: 'NRT → ICN (Seúl)', time: '11:30 → 14:15', detail: 'Eastar Jet ZE602 · Aeropuerto Narita → Aeropuerto Incheon\nReserva: BES-32087550 · Total: 217,66€' }
+    ],
+    hotel: null,
+    tasks: ['Ir al aeropuerto de Narita (NRT) — no Haneda'],
+    activity: 'Vuelo Tokyo → Seúl. Tarde en Seúl.'
+  },
+  {
+    date: '2026-07-11', weekday: 'Sábado', num: 11, month: 'Jul',
+    city: 'Seúl → Barcelona', label: 'Vuelo de vuelta',
+    tags: ['fly'],
+    transport: [
+      { type: 'fly', route: 'ICN → BCN', time: '11:40 → 22:25', detail: 'Lufthansa LH719 + LH1818 · 1 escala · 17h 45min\nReferencia: YHIPAI · PIN: 4394\nBillete electrónico Alex: 2209491148175\nBillete electrónico Emma: 2209491148176\nEquipaje: 1 mano (23x40x55, 8kg) + 1 facturado (23kg)' }
+    ],
+    hotel: null,
+    tasks: ['Asientos asignados en check-in'],
+    activity: 'Vuelo de regreso a Barcelona. ¡Fin del viaje!'
+  }
+];
+
+// ═══════════════ COUNTDOWN ═══════════════
+function updateCountdown() {
+  const diff = Math.ceil((TRIP_START - TODAY) / 86400000);
+  const el = document.getElementById('countdown-days');
+  if (diff > 0) {
+    el.textContent = diff;
+    document.querySelector('.countdown-label').textContent = 'días para Japón';
+  } else if (diff === 0) {
+    el.textContent = '✈';
+    document.querySelector('.countdown-label').textContent = '¡HOY es el día!';
+  } else {
+    el.textContent = Math.abs(diff);
+    document.querySelector('.countdown-label').textContent = 'días en Japón';
+  }
+}
+updateCountdown();
+
+// ═══════════════ ITINERARY RENDER ═══════════════
+const tagLabels = { train: '🚄 Tren', bus: '🚌 Bus', fly: '✈ Vuelo', ferry: '⛴ Ferry', check: '📋 Gestiones', free: '🗺 Libre', hotel: '🏨 Hotel' };
+
+function renderItinerary() {
+  const list = document.getElementById('itinerary-list');
+  const todayStr = TODAY.toISOString().split('T')[0];
+
+  list.innerHTML = days.map((d, i) => {
+    const isPast = d.date < todayStr;
+    const isToday = d.date === todayStr;
+    const cls = isToday ? 'day-today' : isPast ? 'day-past' : '';
+    const tagsHtml = d.tags.map(t => `<span class="tag tag-${t}">${tagLabels[t]}</span>`).join('');
+    if (d.hotel) d.tags.indexOf('hotel') === -1 && null; // hotel implicit
+
+    return `
+      <div class="day-card ${cls}" onclick="showDay(${i})">
+        <div class="day-card-header">
+          <div class="day-badge">
+            <div class="day-num">${d.num}</div>
+            <div class="day-mon">${d.month}</div>
+          </div>
+          <div class="day-info">
+            <div class="day-info-top">
+              <div class="day-city">${d.city}</div>
+            </div>
+            <div class="day-label">${d.weekday} · ${d.label}</div>
+            <div class="day-tags">${tagsHtml}</div>
+          </div>
+          <div class="day-arrow">›</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+renderItinerary();
+
+// ═══════════════ DAY DETAIL ═══════════════
+let prevScreen = 'itinerary';
+function showDay(i) {
+  const d = days[i];
+  prevScreen = 'itinerary';
+  document.getElementById('detail-city').textContent = d.city;
+  document.getElementById('detail-date').textContent = `${d.weekday}, ${d.num} ${d.month} 2026 · ${d.label}`;
+
+  const transportIcons = { train: '🚄', bus: '🚌', fly: '✈', ferry: '⛴', walk: '🚶' };
+  const transportColors = { train: 'train', bus: 'bus', fly: 'fly', ferry: 'ferry', walk: 'walk' };
+
+  let html = '';
+
+  // Transport
+  if (d.transport.length > 0) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title">Trayectos</div>`;
+    d.transport.forEach(t => {
+      const detailFormatted = t.detail.replace(/\n/g, '<br>');
+      html += `
+        <div class="transport-card">
+          <div class="transport-header">
+            <div class="transport-icon ${transportColors[t.type] || 'walk'}">${transportIcons[t.type] || '🚶'}</div>
+            <div>
+              <div class="transport-route">${t.route}</div>
+              <div class="transport-time">${t.time}</div>
+            </div>
+          </div>
+          ${t.detail ? `<div class="transport-detail">${detailFormatted}</div>` : ''}
+        </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Hotel
+  if (d.hotel) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title">Alojamiento</div>
+      <div class="hotel-card">
+        <div class="hotel-icon">🏨</div>
+        <div>
+          <div class="hotel-name">${d.hotel.name}</div>
+          <div class="hotel-price">${d.hotel.price} por noche</div>
+          ${d.hotel.paid !== '?' ? `<div class="hotel-paid">✓ Pagado por ${d.hotel.paid}</div>` : '<div class="hotel-price">Por confirmar</div>'}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Tasks
+  if (d.tasks.length > 0) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title">Gestiones</div>
+      <div class="task-card">`;
+    d.tasks.forEach(t => {
+      html += `<div class="task-item"><div class="task-dot"></div><div>${t}</div></div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  // Activity
+  if (d.activity) {
+    html += `<div class="detail-section">
+      <div class="detail-section-title">Actividad</div>
+      <div class="activity-card">
+        <div class="activity-text">${d.activity}</div>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('detail-content').innerHTML = html;
+  showScreen('detail');
+}
+
+function goBack() {
+  showScreen('itinerary');
+}
+
+// ═══════════════ DOCS RENDER ═══════════════
+function renderDocs() {
+  const docs = [
+    {
+      group: '✈️ Vuelos',
+      items: [
+        {
+          icon: '✈', title: 'Barcelona → Osaka (ida)', subtitle: 'Air China · 20-21 jun',
+          rows: [
+            ['Vuelo 1', 'CA840 · BCN→PVG'], ['Fecha', '20 jun 2026'], ['Salida', '12:10'], ['Llegada', '06:45 (21 jun)'],
+            ['Vuelo 2', 'CA857 · PVG→KIX'], ['Fecha', '21 jun 2026'], ['Salida', '11:50 ⚠️ (actualizado)'], ['Llegada', '15:25'],
+            ['Referencia', 'QCS0M4'], ['Reserva GoToGate', '1101-441-191'],
+            ['Ticket Alex', 'YYEZOL 999-6045139659'], ['Ticket Emma', 'YYEZOL 999-6045139660'],
+            ['Total', '797,00€ (2 personas)']
+          ]
+        },
+        {
+          icon: '✈', title: 'Tokyo → Seúl', subtitle: 'Eastar Jet ZE602 · 10 jul',
+          rows: [
+            ['Vuelo', 'ZE602'], ['Fecha', '10 jul 2026'], ['Salida', '11:30 (Narita NRT)'], ['Llegada', '14:15 (Incheon ICN)'],
+            ['Reserva BudgetAir', 'BES-32087550'], ['Total', '217,66€ (2 personas)']
+          ]
+        },
+        {
+          icon: '✈', title: 'Seúl → Barcelona (vuelta)', subtitle: 'Lufthansa · 11 jul',
+          rows: [
+            ['Vuelos', 'LH719 + LH1818'], ['Fecha', '11 jul 2026'], ['Salida', '11:40 (Incheon ICN)'], ['Llegada', '22:25 (BCN)'],
+            ['Escala', '1 · Duración total 17h 45min'],
+            ['Referencia Lufthansa', 'YHIPAI'], ['PIN Lufthansa', '4394'],
+            ['Ref cliente', '40-983696499'],
+            ['E-ticket Alex', '2209491148175'], ['E-ticket Emma', '2209491148176'],
+            ['Total', '604,00€ (2 personas)'],
+            ['Equipaje', '1 mano 23x40x55cm (8kg) + 1 facturado (23kg)']
+          ]
+        }
+      ]
+    },
+    {
+      group: '🚄 Trenes reservados',
+      items: [
+        {
+          icon: '🚄', title: 'Kyoto → Nagoya → Takayama', subtitle: '28 jun · JR-West Online',
+          rows: [
+            ['Reserva nº', '47930'], ['Receipt ID', 'ADV4069K'],
+            ['Kyoto salida', '07:30 · Nozomi 236'], ['Asientos Kyoto', 'Vagón 4 · 5-A (Alex) + 5-B (Emma)'],
+            ['Nagoya llegada', '08:04 (transbordo 39 min)'],
+            ['Nagoya salida', '08:43 · Hida 3'], ['Asientos Hida', 'Vagón 8 · 12-C (Alex) + 12-D (Emma)'],
+            ['Takayama llegada', '10:58'],
+            ['Recoger tickets', 'westjr.co.jp · PIN: 2311'],
+            ['Precio', '23.440 ¥/persona'],
+            ['⚠️ Nota', 'Llevar tarjeta Visa terminada en 2010']
+          ]
+        }
+      ]
+    },
+    {
+      group: '🚌 Buses reservados',
+      items: [
+        {
+          icon: '🚌', title: 'Takayama ↔ Shirakawa-go', subtitle: '29 jun · Nohi Bus',
+          rows: [
+            ['Operador', 'Nohi Bus'], ['Comprado en', 'Japan Bus Online'],
+            ['Ida', '08:50 Takayama → 09:50 Shirakawa-go'],
+            ['Vuelta', '13:15 Shirakawa-go → 14:15 Takayama'],
+            ['⚠️ Nota', 'Llegar 15 min antes al Takayama Nohi Bus Center']
+          ]
+        }
+      ]
+    },
+    {
+      group: '🏨 Hoteles',
+      items: [
+        {
+          icon: '🏨', title: 'Resumen alojamientos', subtitle: '21 jun — 11 jul',
+          rows: [
+            ['21-22 jun · Osaka', 'Bestie Doyanen · 45,89€ · Emma'],
+            ['23-24 jun · Hiroshima', 'Hotel Patio Hiroshima · 65,29€ · Alex'],
+            ['25-27 jun · Kyoto', 'Resi Stay Yasaka · 161,66€ · Alex'],
+            ['28-29 jun · Takayama', 'Hostel Murasaki · 66,12€ · Alex'],
+            ['30 jun · Matsumoto', 'Riokan Matsukaze · 43€'],
+            ['1-2 jul · Nagano', 'Gondo Aioi · 100,50€ · Emma'],
+            ['3-4 jul · Lago Kawaguchi', 'Togawaso · 133,17€ · Alex'],
+            ['5-9 jul · Tokyo', 'APA Hotel Shinjuku Kabuchiko · 432€']
+          ]
+        }
+      ]
+    },
+    {
+      group: '📱 Apps útiles',
+      items: [
+        {
+          icon: '📱', title: 'Apps recomendadas', subtitle: 'Para el viaje',
+          rows: [
+            ['Radical Storage / Bounce', 'Guardar maletas cerca de estaciones'],
+            ['Kuri Kuli', 'Traduce menús de restaurantes (fotos)'],
+            ['Kura Sushi', 'Cadena de sushi por cinturón'],
+            ['Ichiran Ramen', 'La cadena típica de ramen solo'],
+            ['Google Maps', 'Descargar mapas offline antes de ir'],
+            ['IC Card / SUICA', 'Gestionar en aeropuerto KIX al llegar']
+          ]
+        }
+      ]
+    }
+  ];
+
+  let html = '';
+  docs.forEach(group => {
+    html += `<div class="doc-group"><div class="section-title">${group.group}</div>`;
+    group.items.forEach((item, idx) => {
+      const id = `doc-${group.group.replace(/\W/g,'')}-${idx}`;
+      html += `
+        <div class="doc-card" id="${id}">
+          <div class="doc-header" onclick="toggleDoc('${id}')">
+            <div class="doc-icon">${item.icon}</div>
+            <div>
+              <div class="doc-title">${item.title}</div>
+              <div class="doc-subtitle">${item.subtitle}</div>
+            </div>
+            <div class="doc-chevron">⌄</div>
+          </div>
+          <div class="doc-body">
+            ${item.rows.map(([k, v]) => `
+              <div class="doc-row">
+                <div class="doc-key">${k}</div>
+                <div class="doc-val">${v}</div>
+              </div>`).join('')}
+          </div>
+        </div>`;
+    });
+    html += `</div>`;
+  });
+
+  document.getElementById('docs-content').innerHTML = html;
+}
+renderDocs();
+
+function toggleDoc(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+// ═══════════════ NOTES (localStorage fallback) ═══════════════
+const NOTES_KEY = 'japan2026_notes';
+
+function loadNotes() {
+  try {
+    return JSON.parse(localStorage.getItem(NOTES_KEY) || '[]');
+  } catch(e) { return []; }
+}
+
+function saveNotes(notes) {
+  try {
+    localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+  } catch(e) {}
+}
+
+function renderNotes() {
+  const notes = loadNotes();
+  const list = document.getElementById('notes-list');
+  document.getElementById('home-notes-count').textContent = notes.length;
+
+  if (notes.length === 0) {
+    list.innerHTML = `<div class="empty-notes"><div class="emoji">📝</div><p>Todavía no hay notas.<br>¡Escribe la primera cuando lleguéis!</p></div>`;
+    return;
+  }
+
+  list.innerHTML = notes.slice().reverse().map((n, ri) => {
+    const i = notes.length - 1 - ri;
+    return `
+      <div class="note-card">
+        <div class="note-card-header">
+          <span class="note-day-label">${n.dayLabel || 'Sin día'}</span>
+          <span class="note-date-label">${n.savedAt || ''}</span>
+        </div>
+        <div class="note-text">${n.text.replace(/\n/g,'<br>')}</div>
+        <button class="note-delete" onclick="deleteNote(${i})" style="position:absolute;top:10px;right:10px;">×</button>
+      </div>`;
+  }).join('');
+}
+
+function saveNote() {
+  const text = document.getElementById('note-textarea').value.trim();
+  if (!text) return;
+  const sel = document.getElementById('note-day-select');
+  const dayLabel = sel.options[sel.selectedIndex]?.text || 'Sin día';
+  const now = new Date();
+  const savedAt = now.toLocaleDateString('es-ES', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+  const notes = loadNotes();
+  notes.push({ text, dayLabel, savedAt });
+  saveNotes(notes);
+  document.getElementById('note-textarea').value = '';
+  renderNotes();
+
+  // Sync status visual
+  const dot = document.getElementById('sync-dot');
+  const lbl = document.getElementById('sync-label');
+  dot.className = 'sync-dot syncing';
+  lbl.textContent = 'Guardando...';
+  setTimeout(() => {
+    dot.className = 'sync-dot synced';
+    lbl.textContent = 'Guardado en este dispositivo';
+  }, 600);
+}
+
+function deleteNote(i) {
+  const notes = loadNotes();
+  notes.splice(i, 1);
+  saveNotes(notes);
+  renderNotes();
+}
+
+function populateDaySelect() {
+  const sel = document.getElementById('note-day-select');
+  sel.innerHTML = '<option value="">— Día general —</option>';
+  days.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.date;
+    opt.textContent = `${d.num} ${d.month} · ${d.city.split(' → ')[0]}`;
+    sel.appendChild(opt);
+  });
+}
+populateDaySelect();
+renderNotes();
+
+// Sync UI
+setTimeout(() => {
+  document.getElementById('sync-dot').className = 'sync-dot synced';
+  document.getElementById('sync-label').textContent = 'Guardado en este dispositivo';
+}, 800);
+
+// ═══════════════ NAVIGATION ═══════════════
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  document.getElementById(name + '-screen').classList.add('active');
+  const navBtn = document.getElementById('nav-' + name);
+  if (navBtn) navBtn.classList.add('active');
+
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
