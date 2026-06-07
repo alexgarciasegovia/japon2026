@@ -9,12 +9,11 @@
 <title>Japón 2026 🇯🇵</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --red:#C0392B; --red-light:#E8A09A; --cream:#FAF7F2; --ink:#1A1410;
-  --ink-mid:#3D3530; --ink-light:#8C7B72; --sand:#EDE8E0; --sand-dark:#D4CFC5;
-  --white:#FFFFFF; --green:#2E7D56; --green-dim:rgba(46,125,86,0.5);
-  --gold:#B8860B; --blue:#1A5276;
-  --safe-top:env(safe-area-inset-top,0px); --safe-bottom:env(safe-area-inset-bottom,0px);
+:root{
+  --red:#C0392B;--red-light:#E8A09A;--cream:#FAF7F2;--ink:#1A1410;
+  --ink-mid:#3D3530;--ink-light:#8C7B72;--sand:#EDE8E0;--sand-dark:#D4CFC5;
+  --white:#FFFFFF;--green:#2E7D56;--gold:#B8860B;--blue:#1A5276;
+  --safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;max-width:430px;margin:0 auto;overflow-x:hidden;}
@@ -47,7 +46,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .nav-btn svg{width:20px;height:20px;}
 .nav-btn span{font-size:9px;font-weight:500;}
 
-/* ═══ HOME ═══ */
+/* HOME HERO */
 .home-hero{background:var(--ink);color:var(--cream);padding:24px 20px 0;position:relative;overflow:hidden;}
 .home-hero::before{content:'⛩';position:absolute;font-size:120px;opacity:0.04;top:-10px;right:-10px;pointer-events:none;}
 .hero-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
@@ -58,46 +57,51 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .hero-right .trip-dates{font-size:11px;color:var(--ink-light);margin-top:4px;}
 
 /* TIMELINE */
-.timeline-section{background:var(--ink);padding:0 0 20px;}
-.timeline-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 20px;}
+.timeline-section{background:var(--ink);padding:0 0 16px;}
+.timeline-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:8px 20px;}
 .timeline-wrapper::-webkit-scrollbar{display:none;}
-.timeline-track{display:flex;align-items:flex-start;gap:0;width:max-content;padding:8px 0;}
-.tl-item{display:flex;flex-direction:column;align-items:center;width:80px;cursor:pointer;position:relative;}
-.tl-item:not(:last-child)::after{content:'';position:absolute;top:14px;left:calc(50% + 10px);width:60px;height:1px;background:rgba(255,255,255,0.15);}
-.tl-item.visited::after{background:rgba(46,125,86,0.4);}
-.tl-item.current::after{background:rgba(192,57,43,0.4);}
-.tl-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;margin-bottom:8px;transition:all 0.3s;border:2px solid transparent;}
-.tl-item.visited .tl-dot{background:rgba(46,125,86,0.5);border-color:rgba(46,125,86,0.3);}
-.tl-item.current .tl-dot{background:var(--red);border-color:var(--red-light);box-shadow:0 0 10px rgba(192,57,43,0.6);animation:pulse-tl 1.5s infinite;}
-.tl-item.pending .tl-dot{background:#2A2420;border-color:#3D3530;}
+.timeline-track{display:flex;align-items:flex-start;gap:0;width:max-content;}
+.tl-item{display:flex;flex-direction:column;align-items:center;width:72px;cursor:pointer;position:relative;}
+.tl-item:not(:last-child)::after{content:'';position:absolute;top:10px;left:calc(50% + 8px);width:56px;height:1px;background:rgba(255,255,255,0.12);}
+.tl-item.tl-visited::after{background:rgba(46,125,86,0.4);}
+.tl-item.tl-current::after{background:rgba(192,57,43,0.4);}
+.tl-dot{width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-bottom:7px;border:2px solid transparent;}
+.tl-item.tl-visited .tl-dot{background:rgba(46,125,86,0.5);border-color:rgba(46,125,86,0.3);}
+.tl-item.tl-current .tl-dot{background:var(--red);border-color:var(--red-light);box-shadow:0 0 10px rgba(192,57,43,0.6);animation:pulse-tl 1.5s infinite;}
+.tl-item.tl-pending .tl-dot{background:#2A2420;border-color:#3D3530;}
 @keyframes pulse-tl{0%,100%{box-shadow:0 0 8px rgba(192,57,43,0.6);}50%{box-shadow:0 0 16px rgba(192,57,43,0.9);}}
-.tl-city{font-size:9px;color:rgba(255,255,255,0.4);text-align:center;line-height:1.3;max-width:70px;}
-.tl-item.visited .tl-city{color:rgba(46,125,86,0.7);}
-.tl-item.current .tl-city{color:var(--red-light);font-weight:600;}
-.tl-date{font-size:8px;color:rgba(255,255,255,0.2);margin-top:3px;text-align:center;}
-.tl-item.current .tl-date{color:rgba(232,160,154,0.6);}
-
-.timeline-footer{display:flex;justify-content:flex-end;padding:0 20px;padding-bottom:4px;}
-.back-today-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.5);border-radius:20px;padding:5px 12px;font-size:10px;font-family:'DM Sans',sans-serif;cursor:pointer;display:none;}
+.tl-city{font-size:8px;color:rgba(255,255,255,0.35);text-align:center;line-height:1.3;max-width:66px;}
+.tl-item.tl-visited .tl-city{color:rgba(46,125,86,0.7);}
+.tl-item.tl-current .tl-city{color:var(--red-light);font-weight:600;}
+.tl-date{font-size:7px;color:rgba(255,255,255,0.18);margin-top:2px;text-align:center;}
+.tl-item.tl-current .tl-date{color:rgba(232,160,154,0.6);}
+.timeline-footer{display:flex;justify-content:flex-end;padding:0 20px 4px;}
+.back-today-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.5);border-radius:20px;padding:4px 12px;font-size:10px;font-family:'DM Sans',sans-serif;cursor:pointer;display:none;}
 .back-today-btn.visible{display:block;}
 
 /* HOME BODY */
 .home-body{padding:14px 16px;}
-.section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-light);margin-bottom:8px;padding:0 2px;}
+.section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-light);margin-bottom:8px;}
 
-/* PENDING */
+/* PENDING SECTION */
+.pending-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.pending-header-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-light);}
+.pending-header-btns{display:flex;gap:8px;align-items:center;}
+.pending-add-btn{background:var(--red);color:white;border:none;border-radius:50%;width:24px;height:24px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;font-weight:300;}
+.pending-done-btn{background:rgba(46,125,86,0.12);color:var(--green);border:1px solid rgba(46,125,86,0.2);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;}
 .pending-card{background:var(--white);border-radius:14px;border:1px solid var(--sand-dark);overflow:hidden;margin-bottom:12px;}
 .pending-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-bottom:1px solid var(--sand);}
 .pending-item:last-child{border-bottom:none;}
 .pending-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--sand-dark);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all 0.2s;background:transparent;}
 .pending-check.done{background:var(--green);border-color:var(--green);}
 .pending-check.done::after{content:'✓';color:white;font-size:12px;font-weight:700;}
-.pending-info{flex:1;}
+.pending-info{flex:1;min-width:0;}
 .pending-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3;}
 .pending-title.done-text{text-decoration:line-through;color:var(--ink-light);}
 .pending-sub{font-size:11px;color:var(--ink-light);margin-top:3px;line-height:1.5;}
-.pending-day{font-size:10px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;}
-.pending-note-input{width:100%;border:1px solid var(--sand-dark);outline:none;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink-mid);background:var(--cream);border-radius:6px;padding:6px 8px;margin-top:6px;resize:none;}
+.pending-day-tag{font-size:10px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-top:4px;}
+.pending-note-inp{width:100%;border:1px solid var(--sand-dark);outline:none;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink-mid);background:var(--cream);border-radius:6px;padding:6px 8px;margin-top:6px;resize:none;}
+.empty-pending{text-align:center;padding:20px;color:var(--ink-light);font-size:13px;background:var(--white);border-radius:14px;border:1px solid var(--sand-dark);margin-bottom:12px;}
 
 /* QUICK FLIGHT */
 .quick-flight{background:var(--ink);border-radius:14px;padding:14px;color:var(--cream);margin-bottom:10px;}
@@ -106,37 +110,36 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .flight-time{font-size:11px;color:var(--ink-light);margin-top:2px;}
 .flight-arrow{color:var(--red-light);font-size:14px;}
 .flight-meta{font-size:10px;color:var(--ink-light);margin-top:8px;border-top:1px solid rgba(255,255,255,0.08);padding-top:8px;display:flex;gap:10px;flex-wrap:wrap;}
-
 .alert-card{background:#FFF8E7;border-radius:12px;padding:11px 13px;border:1px solid #F0D080;margin-bottom:7px;display:flex;gap:9px;align-items:flex-start;}
 .alert-icon{font-size:15px;flex-shrink:0;margin-top:1px;}
 .alert-title{font-weight:600;font-size:12px;margin-bottom:2px;color:#7D5A00;}
 .alert-text{font-size:11px;color:#7D5A00;line-height:1.5;}
 
-/* ═══ ITINERARY ═══ */
+/* ITINERARY */
 .itinerary-list{padding:10px 14px;}
 .day-card{border-radius:14px;margin-bottom:8px;overflow:hidden;cursor:pointer;transition:transform 0.15s;border:1px solid var(--sand-dark);}
 .day-card:active{transform:scale(0.98);}
-.day-card.past{background:rgba(46,125,86,0.06);border-color:rgba(46,125,86,0.2);opacity:0.8;}
-.day-card.today{background:var(--white);border-color:var(--red);box-shadow:0 0 0 1px rgba(192,57,43,0.2);}
+.day-card.past{background:rgba(46,125,86,0.06);border-color:rgba(46,125,86,0.2);opacity:0.85;}
+.day-card.today{background:var(--white);border-color:var(--red);box-shadow:0 0 0 1px rgba(192,57,43,0.15);}
 .day-card.future{background:var(--white);}
 .day-card-header{display:flex;align-items:center;padding:12px 13px;gap:11px;}
 .day-badge{border-radius:10px;width:40px;height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
-.day-badge.past-badge{background:rgba(46,125,86,0.15);}
-.day-badge.today-badge{background:var(--red);}
-.day-badge.future-badge{background:var(--ink);}
+.badge-past{background:rgba(46,125,86,0.15);}
+.badge-today{background:var(--red);}
+.badge-future{background:var(--ink);}
 .day-num{font-size:16px;font-weight:700;line-height:1;}
-.day-num.past-num{color:var(--green);}
-.day-num.today-num{color:white;}
-.day-num.future-num{color:var(--cream);}
+.num-past{color:var(--green);}
+.num-today{color:white;}
+.num-future{color:var(--cream);}
 .day-mon{font-size:8px;text-transform:uppercase;letter-spacing:0.08em;}
-.day-mon.past-mon{color:rgba(46,125,86,0.6);}
-.day-mon.today-mon{color:rgba(255,255,255,0.7);}
-.day-mon.future-mon{color:var(--ink-light);}
+.mon-past{color:rgba(46,125,86,0.6);}
+.mon-today{color:rgba(255,255,255,0.7);}
+.mon-future{color:var(--ink-light);}
 .day-info{flex:1;min-width:0;}
 .day-city{font-size:14px;font-weight:600;}
-.day-city.past-city{color:rgba(46,125,86,0.8);}
-.day-city.today-city{color:var(--red);}
-.day-city.future-city{color:var(--ink);}
+.city-past{color:rgba(46,125,86,0.8);}
+.city-today{color:var(--red);}
+.city-future{color:var(--ink);}
 .day-label{font-size:11px;color:var(--ink-light);margin-top:2px;}
 .day-tags{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap;}
 .tag{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:500;}
@@ -148,27 +151,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .tag-check{background:#FDECEA;color:#C0392B;}
 .day-arrow{color:var(--sand-dark);font-size:14px;}
 
-/* ═══ DETAIL ═══ */
+/* DETAIL */
 #detail-screen{background:var(--cream);}
 .detail-topbar{background:var(--ink);color:var(--cream);padding:calc(var(--safe-top) + 12px) 16px 14px;position:sticky;top:0;z-index:100;}
 .detail-city{font-size:19px;font-weight:700;font-family:'Noto Serif JP',serif;}
 .detail-date{font-size:11px;color:var(--ink-light);margin-top:3px;}
 .detail-content{padding:14px;}
 .detail-section{margin-bottom:18px;}
-.detail-section-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-light);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
-.detail-section-title::after{content:'';flex:1;height:1px;background:var(--sand-dark);}
+.ds-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-light);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.ds-title::after{content:'';flex:1;height:1px;background:var(--sand-dark);}
 .transport-card{background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--sand-dark);margin-bottom:6px;}
 .transport-header{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
 .transport-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
-.transport-icon.train{background:#D6E8F5;}
-.transport-icon.bus{background:#EBD9F8;}
-.transport-icon.fly{background:#D9F0E8;}
-.transport-icon.ferry{background:#FDE8CC;}
+.ti-train{background:#D6E8F5;}.ti-bus{background:#EBD9F8;}.ti-fly{background:#D9F0E8;}.ti-ferry{background:#FDE8CC;}
 .transport-route{font-size:13px;font-weight:600;}
 .transport-time{font-size:11px;color:var(--ink-light);margin-top:1px;}
 .transport-detail{font-size:12px;color:var(--ink-mid);line-height:1.6;background:var(--cream);border-radius:8px;padding:9px 11px;margin-top:4px;border-left:3px solid var(--sand-dark);}
-.transport-detail.booked{border-left-color:var(--green);}
-.transport-detail.todo{border-left-color:var(--gold);}
+.td-booked{border-left-color:var(--green);}
+.td-todo{border-left-color:var(--gold);}
 .hotel-card{background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--sand-dark);display:flex;align-items:center;gap:11px;}
 .hotel-name{font-size:13px;font-weight:600;}
 .hotel-price{font-size:11px;color:var(--ink-light);margin-top:2px;}
@@ -178,20 +178,32 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .task-item:last-child{border-bottom:none;padding-bottom:0;}
 .task-item:first-child{padding-top:0;}
 .task-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
-.task-dot.green{background:var(--green);}
-.task-dot.gold{background:var(--gold);}
+.td-green{background:var(--green);}.td-gold{background:var(--gold);}
 .activity-card{background:var(--ink);color:var(--cream);border-radius:12px;padding:13px;}
 .activity-text{font-size:13px;line-height:1.6;}
+
+/* DAY PENDING */
+.day-pending-card{background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--sand-dark);}
+.dp-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--sand);font-size:12px;color:var(--ink-mid);line-height:1.5;}
+.dp-item:last-child{border-bottom:none;padding-bottom:0;}
+.dp-item:first-child{padding-top:0;}
+.dp-item.dp-done{opacity:0.5;}
+.dp-check{width:20px;height:20px;border-radius:5px;border:2px solid var(--sand-dark);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all 0.2s;}
+.dp-check.dp-checked{background:var(--green);border-color:var(--green);}
+.dp-check.dp-checked::after{content:'✓';color:white;font-size:10px;font-weight:700;}
+.dp-info{flex:1;}
+.dp-title{font-weight:600;font-size:12px;}
+.dp-desc{font-size:11px;color:var(--ink-light);margin-top:2px;}
 
 /* DAY NOTES */
 .day-notes-card{background:#F0F7F4;border-radius:12px;padding:12px;border:1px solid rgba(46,125,86,0.2);}
 .day-note-item{padding:8px 0;border-bottom:1px solid rgba(46,125,86,0.15);font-size:12px;color:var(--ink-mid);line-height:1.5;}
 .day-note-item:last-child{border-bottom:none;padding-bottom:0;}
 .day-note-item:first-child{padding-top:0;}
-.day-note-meta{font-size:10px;color:var(--green);font-weight:600;margin-bottom:3px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.day-note-meta{font-size:10px;color:var(--green);font-weight:600;margin-bottom:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
 .day-note-tag{font-size:9px;background:rgba(46,125,86,0.12);color:var(--green);padding:1px 6px;border-radius:10px;}
 
-/* ═══ DOCS ═══ */
+/* DOCS */
 .docs-body{padding:14px;}
 .doc-group{margin-bottom:16px;}
 .doc-card{background:var(--white);border-radius:12px;border:1px solid var(--sand-dark);overflow:hidden;margin-bottom:6px;}
@@ -208,7 +220,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .doc-key{font-size:11px;color:var(--ink-light);flex-shrink:0;min-width:90px;}
 .doc-val{font-size:12px;font-weight:500;text-align:right;color:var(--ink);word-break:break-all;}
 
-/* ═══ NOTES ═══ */
+/* NOTES */
 .notes-body{padding:14px;}
 .note-input-area{background:var(--white);border-radius:14px;padding:13px;border:1px solid var(--sand-dark);margin-bottom:14px;}
 .note-input-area textarea{width:100%;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:transparent;resize:none;min-height:75px;line-height:1.6;}
@@ -216,12 +228,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .tags-row{display:flex;align-items:center;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--sand);flex-wrap:wrap;}
 .tag-pill{font-size:11px;padding:3px 8px;border-radius:20px;background:#D6E8F5;color:var(--blue);font-weight:500;display:flex;align-items:center;gap:4px;}
 .tag-pill button{background:none;border:none;color:var(--blue);cursor:pointer;font-size:12px;padding:0;line-height:1;}
-.tag-input-field{border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--blue);background:transparent;min-width:80px;flex:1;}
+.tag-input-field{border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--blue);background:transparent;min-width:70px;flex:1;}
 .tag-input-field::placeholder{color:var(--ink-light);}
 .note-meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--sand);}
-.note-day-select{font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--sand-dark);border-radius:8px;padding:5px 8px;background:var(--cream);color:var(--ink);outline:none;}
+.note-day-select{font-family:'DM Sans',sans-serif;font-size:12px;border:1px solid var(--sand-dark);border-radius:8px;padding:5px 8px;background:var(--cream);color:var(--ink);outline:none;max-width:180px;}
 .save-btn{background:var(--red);color:white;border:none;border-radius:8px;padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;}
-.note-card{background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--sand-dark);margin-bottom:8px;position:relative;}
+.note-card{background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--sand-dark);margin-bottom:8px;}
 .note-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
 .note-day-label{font-size:10px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:0.08em;}
 .note-date-label{font-size:10px;color:var(--ink-light);}
@@ -233,7 +245,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .empty-notes .emoji{font-size:48px;margin-bottom:12px;}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green);}
 
-/* ═══ PHRASES ═══ */
+/* PHRASES */
 .phrases-body{padding:14px;}
 .phrase-group{margin-bottom:16px;}
 .phrase-list{display:flex;flex-direction:column;gap:7px;}
@@ -249,16 +261,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .phrase-modal{position:fixed;inset:0;z-index:500;display:flex;flex-direction:column;}
 .phrase-modal.hidden{display:none;}
 .phrase-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.85);}
-.phrase-content{position:relative;margin-top:auto;background:var(--ink);border-radius:24px 24px 0 0;padding:24px 24px calc(24px + var(--safe-bottom));min-height:60vh;display:flex;flex-direction:column;}
+.phrase-content{position:relative;margin-top:auto;background:var(--ink);border-radius:24px 24px 0 0;padding:24px 24px calc(24px + var(--safe-bottom));min-height:55vh;display:flex;flex-direction:column;}
 .phrase-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.1);border:none;color:var(--cream);font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.phrase-modal-label{font-size:12px;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;}
-.phrase-jp-big{font-family:'Noto Serif JP',serif;font-size:32px;color:var(--cream);line-height:1.4;margin-bottom:16px;flex:1;display:flex;align-items:center;}
-.phrase-romaji{font-size:16px;color:var(--red-light);margin-bottom:8px;font-style:italic;}
+.phrase-modal-label{font-size:12px;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;}
+.phrase-jp-big{font-family:'Noto Serif JP',serif;font-size:28px;color:var(--cream);line-height:1.4;margin-bottom:14px;flex:1;display:flex;align-items:center;}
+.phrase-romaji{font-size:15px;color:var(--red-light);margin-bottom:8px;font-style:italic;}
 .phrase-es-small{font-size:13px;color:var(--ink-light);}
-.phrase-interactive-input{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:16px;color:var(--cream);width:100%;outline:none;margin-bottom:14px;}
+.phrase-interactive-input{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:16px;color:var(--cream);width:100%;outline:none;margin-bottom:12px;}
 .phrase-interactive-input::placeholder{color:rgba(255,255,255,0.3);}
 
-/* ADD PHRASE MODAL */
+/* ADD MODALS */
 .add-modal{position:fixed;inset:0;z-index:600;display:flex;flex-direction:column;}
 .add-modal.hidden{display:none;}
 .add-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.7);}
@@ -266,10 +278,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .add-content h3{font-size:16px;font-weight:700;margin-bottom:16px;}
 .add-field{margin-bottom:12px;}
 .add-field label{font-size:11px;font-weight:600;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:5px;}
-.add-field input{width:100%;border:1px solid var(--sand-dark);border-radius:10px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--white);outline:none;}
-.add-field input:focus{border-color:var(--red);}
+.add-field input,.add-field select,.add-field textarea{width:100%;border:1px solid var(--sand-dark);border-radius:10px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--white);outline:none;}
+.add-field input:focus,.add-field select:focus,.add-field textarea:focus{border-color:var(--red);}
+.add-field textarea{resize:none;min-height:60px;}
 .add-save-btn{width:100%;background:var(--red);color:white;border:none;border-radius:12px;padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;}
 .add-cancel{width:100%;background:none;border:none;color:var(--ink-light);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;padding:12px;margin-top:4px;}
+
+/* DONE TASKS MODAL */
+.done-modal{position:fixed;inset:0;z-index:600;display:flex;flex-direction:column;}
+.done-modal.hidden{display:none;}
+.done-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.7);}
+.done-content{position:relative;margin-top:auto;background:var(--cream);border-radius:24px 24px 0 0;padding:20px 20px calc(20px + var(--safe-bottom));max-height:70vh;overflow-y:auto;}
+.done-content h3{font-size:16px;font-weight:700;margin-bottom:16px;}
+.done-item{background:var(--white);border-radius:12px;padding:12px 14px;margin-bottom:8px;border:1px solid rgba(46,125,86,0.2);opacity:0.8;}
+.done-item-title{font-size:13px;font-weight:600;color:var(--green);text-decoration:line-through;}
+.done-item-sub{font-size:11px;color:var(--ink-light);margin-top:2px;}
+.done-item-day{font-size:10px;color:var(--green);font-weight:600;margin-top:4px;}
+.done-close{width:100%;background:var(--ink);color:white;border:none;border-radius:12px;padding:14px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;}
 
 ::-webkit-scrollbar{display:none;}
 </style>
@@ -309,6 +334,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
     </div>
   </div>
   <div class="home-body">
+    <div class="pending-header">
+      <div class="pending-header-title">Pendiente</div>
+      <div class="pending-header-btns">
+        <button class="pending-done-btn" onclick="openDoneModal()">✓ Finalizadas</button>
+        <button class="pending-add-btn" onclick="openAddTaskModal()" title="Añadir tarea">+</button>
+      </div>
+    </div>
     <div id="home-pending"></div>
     <div class="section-title" style="margin-top:4px">Vuelo de ida</div>
     <div class="quick-flight">
@@ -323,8 +355,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
     </div>
     <div class="section-title">Recordatorios</div>
     <div class="alert-card"><div class="alert-icon">🖨</div><div><div class="alert-title">Imprimir vouchers bus Nohi</div><div class="alert-text">Antes de salir — solo papel físico, NO pantallazos</div></div></div>
-    <div class="alert-card"><div class="alert-icon">🎫</div><div><div class="alert-title">Comprar JR Kansai-Hiroshima Pass</div><div class="alert-text">westjr.co.jp · 17.000¥/persona · intentar entre semana</div></div></div>
-    <div class="alert-card"><div class="alert-icon">🎨</div><div><div class="alert-title">Reservar TeamLabs Borderless</div><div class="alert-text">Azabudai Hills · ~30-40€/persona · se agotan</div></div></div>
+    <div class="alert-card"><div class="alert-icon">🎨</div><div><div class="alert-title">Reservar TeamLabs Planets</div><div class="alert-text">Toyosu · ~30-40€/persona · se agotan semanas antes</div></div></div>
   </div>
 </div>
 
@@ -358,7 +389,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 <div id="notes-screen" class="screen">
   <div class="topbar">
     <div><div class="topbar-title">Notas 📝</div><div class="topbar-sub" id="sync-label">Listo</div></div>
-    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink-light)"><div class="sync-dot" id="sync-dot"></div></div>
+    <div style="display:flex;align-items:center;gap:6px"><div class="sync-dot" id="sync-dot"></div></div>
   </div>
   <div class="notes-body">
     <div class="note-input-area">
@@ -390,7 +421,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
   <div class="phrase-overlay" onclick="closePhraseModal()"></div>
   <div class="phrase-content">
     <button class="phrase-close" onclick="closePhraseModal()">✕</button>
-    <div class="phrase-modal-label" id="pm-label">Español</div>
+    <div class="phrase-modal-label" id="pm-label">Muestra esto:</div>
     <div id="pm-interactive-area"></div>
     <div class="phrase-jp-big" id="pm-jp"></div>
     <div class="phrase-romaji" id="pm-romaji"></div>
@@ -399,15 +430,38 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 </div>
 
 <!-- ADD PHRASE MODAL -->
-<div class="add-modal hidden" id="add-modal">
-  <div class="add-overlay" onclick="closeAddModal()"></div>
+<div class="add-modal hidden" id="add-phrase-modal">
+  <div class="add-overlay" onclick="closeAddPhraseModal()"></div>
   <div class="add-content">
     <h3>Nueva frase</h3>
     <div class="add-field"><label>En español</label><input id="af-es" placeholder="¿Dónde está el baño?"/></div>
     <div class="add-field"><label>En japonés (kanji)</label><input id="af-jp" placeholder="トイレはどこですか？"/></div>
     <div class="add-field"><label>Fonética (romaji)</label><input id="af-ro" placeholder="Toire wa doko desu ka?"/></div>
     <button class="add-save-btn" onclick="saveCustomPhrase()">Guardar frase</button>
-    <button class="add-cancel" onclick="closeAddModal()">Cancelar</button>
+    <button class="add-cancel" onclick="closeAddPhraseModal()">Cancelar</button>
+  </div>
+</div>
+
+<!-- ADD TASK MODAL -->
+<div class="add-modal hidden" id="add-task-modal">
+  <div class="add-overlay" onclick="closeAddTaskModal()"></div>
+  <div class="add-content">
+    <h3>Nueva tarea pendiente</h3>
+    <div class="add-field"><label>Título</label><input id="at-title" placeholder="Reservar entrada..."/></div>
+    <div class="add-field"><label>Descripción (opcional)</label><textarea id="at-desc" placeholder="Detalles, links, precios..."></textarea></div>
+    <div class="add-field"><label>¿Cuándo?</label><select id="at-day"></select></div>
+    <button class="add-save-btn" onclick="saveNewTask()">Guardar tarea</button>
+    <button class="add-cancel" onclick="closeAddTaskModal()">Cancelar</button>
+  </div>
+</div>
+
+<!-- DONE TASKS MODAL -->
+<div class="done-modal hidden" id="done-modal">
+  <div class="done-overlay" onclick="closeDoneModal()"></div>
+  <div class="done-content">
+    <h3>✅ Tareas finalizadas</h3>
+    <div id="done-list"></div>
+    <button class="done-close" onclick="closeDoneModal()">Cerrar</button>
   </div>
 </div>
 
@@ -440,80 +494,75 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 const PASS='txara';
 function checkPassword(){
   const v=document.getElementById('lock-input').value;
-  if(v===PASS){sessionStorage.setItem('japan2026_auth','1');document.getElementById('lock-screen').classList.add('hidden');}
+  if(v===PASS){sessionStorage.setItem('j26_auth','1');document.getElementById('lock-screen').classList.add('hidden');}
   else{const e=document.getElementById('lock-error');e.textContent='Contraseña incorrecta';document.getElementById('lock-input').value='';setTimeout(()=>e.textContent='',2000);}
 }
 document.getElementById('lock-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPassword();});
-if(sessionStorage.getItem('japan2026_auth')==='1')document.getElementById('lock-screen').classList.add('hidden');
+if(sessionStorage.getItem('j26_auth')==='1')document.getElementById('lock-screen').classList.add('hidden');
 
-// ═══ DATA ═══
+// ═══ DATES ═══
 const TRIP_START=new Date('2026-06-20');
 const TODAY=new Date();
 const TODAY_STR=TODAY.toISOString().split('T')[0];
-
-// Today date label
-const opts={weekday:'long',day:'numeric',month:'long'};
-document.getElementById('today-date-label').textContent=TODAY.toLocaleDateString('es-ES',opts);
-
-// Countdown
+document.getElementById('today-date-label').textContent=TODAY.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long'});
 function updateCountdown(){
   const diff=Math.ceil((TRIP_START-TODAY)/86400000);
-  const el=document.getElementById('countdown-days');
-  const lbl=document.getElementById('countdown-label');
+  const el=document.getElementById('countdown-days'),lbl=document.getElementById('countdown-label');
   if(diff>0){el.textContent=diff;lbl.textContent='días para Japón';}
   else if(diff===0){el.textContent='✈';lbl.textContent='¡HOY es el día!';}
   else{el.textContent=Math.abs(diff);lbl.textContent='días en Japón';}
 }
 updateCountdown();
 
+// ═══ DAYS DATA ═══
 const days=[
   {date:'2026-06-20',weekday:'Sábado',num:20,month:'Jun',city:'Barcelona → Shanghai',label:'Día de vuelo ✈',tags:['fly'],
    transport:[{type:'fly',route:'BCN → PVG',time:'12:10 → 06:45 (+1)',booked:true,detail:'✅ Air China CA840 · Ref QCS0M4\nTicket Emma: YYEZOL 999-6045139660\nTicket Alex: YYEZOL 999-6045139659\nReserva GoToGate: 1101-441-191'}],
    hotel:null,booked:['Vuelo BCN→PVG · Air China CA840 · Ref QCS0M4'],todo:['Llegar aeropuerto con tiempo','Check-in online si disponible'],
-   activity:'Vuelo Barcelona → Shanghai Pudong. Escala antes de Osaka.'},
+   activity:'Vuelo Barcelona → Shanghai Pudong. Escala en Shanghai antes de Osaka.'},
 
   {date:'2026-06-21',weekday:'Domingo',num:21,month:'Jun',city:'Shanghai → Osaka',label:'Llegada a Japón 🎌',tags:['fly','check'],
    transport:[
      {type:'fly',route:'PVG → KIX',time:'11:50 → 15:25',booked:true,detail:'✅ Air China CA857 · Ref QCS0M4\n⚠️ Salida actualizada a 11:50 (antes 12:00)'},
-     {type:'train',route:'KIX → Osaka ciudad',time:'~70 min',booked:false,detail:'🎫 Canjear JR Kansai-Hiroshima Pass en oficina JR del aeropuerto nada más llegar (llevar voucher email)\nEl tren al centro está incluido en el pase'}],
+     {type:'train',route:'KIX → Osaka ciudad',time:'~70 min',booked:true,detail:'✅ Incluido en el JR Kansai-Hiroshima Pass\nRecoger pase en máquina JR del aeropuerto KIX (FUERA de los tornos)\nLlevar tarjeta Visa física *2010 + PIN 2311\nReserva nº 49688 · Receipt ADW2913K'}],
    hotel:{name:'Bestie Doyanen',price:'45,89€',paid:'Emma'},
-   booked:['Vuelo CA857 PVG→KIX · Ref QCS0M4','Hotel Bestie Doyanen · Pagado Emma'],
-   todo:['Canjear JR Kansai-Hiroshima Pass en oficina JR KIX','Gestionar tarjeta SUICA en KIX','Activar pase día 21 — válido 5 días hasta el 25'],
+   booked:['Vuelo CA857 PVG→KIX · Ref QCS0M4','JR Kansai-Hiroshima Pass · Reserva 49688 · Recogida en Osaka','Hotel Bestie Doyanen · Pagado Emma','✅ Visit Japan Web tramitado (Alex y Emma)'],
+   todo:['Recoger JR Pass en máquina JR KIX (fuera de tornos) · Visa *2010 + PIN 2311','Gestionar tarjeta SUICA en KIX para metros y buses'],
    activity:'Llegada a Osaka. Dotonbori por la noche.'},
 
   {date:'2026-06-22',weekday:'Lunes',num:22,month:'Jun',city:'Osaka',label:'Universal Studios Japan 🎢',tags:['train'],
-   transport:[{type:'train',route:'Osaka → Universal City → Osaka',time:'20 min cada trayecto',booked:false,detail:'🎫 Pagar con SUICA · Línea JR Yumesaki · incluido en el Kansai-Hiroshima Pass'}],
+   transport:[{type:'train',route:'Osaka → Universal City → Osaka',time:'20 min cada trayecto',booked:true,detail:'✅ Línea JR Yumesaki · incluido en el Kansai-Hiroshima Pass · pagar con SUICA'}],
    hotel:{name:'Bestie Doyanen',price:'45,89€',paid:'Emma'},
-   booked:['✅ Entrada Universal Studios · KLOOK · Booking NVN221737 · 106€ · 2 adultos · 22 jun 2026'],
+   booked:['✅ Entrada Universal Studios · KLOOK · Booking NVN221737 · 106€ · 2 adultos · 22 jun'],
    todo:['Mostrar voucher Klook en la entrada'],
    activity:'Universal Studio Japan día completo. Osaka por la noche.'},
 
   {date:'2026-06-23',weekday:'Martes',num:23,month:'Jun',city:'Osaka → Himeji → Hiroshima',label:'Tren bala + Castillo ⚔️',tags:['train','check'],
    transport:[
-     {type:'train',route:'Hotel Osaka → Shin-Osaka',time:'~25 min',booked:false,detail:'🎫 Metro/SUICA · Salir del hotel ~08:45 para llegar a Shin-Osaka sobre las 09:10'},
-     {type:'train',route:'Shin-Osaka → Himeji',time:'30 min · Salida ~09:30',booked:true,detail:'✅ Shinkansen Nozomi/Mizuho · incluido en el pase JR'},
-     {type:'train',route:'Himeji → Hiroshima',time:'1h',booked:true,detail:'✅ Shinkansen · incluido en el pase JR · tras visitar el castillo'},
-     {type:'bus',route:'Dentro de Hiroshima',time:'',booked:true,detail:'✅ Bus Meipuru-pu (Sightseeing Loop) — incluido en el pase'}],
+     {type:'train',route:'Hotel Osaka → Shin-Osaka',time:'~25 min · Metro/SUICA',booked:false,detail:'⏰ Salir del hotel ~08:45 para llegar a Shin-Osaka sobre las 09:10'},
+     {type:'train',route:'Shin-Osaka → Himeji',time:'30 min · Salida ~09:30',booked:true,detail:'✅ Shinkansen Nozomi/Mizuho · incluido en el JR Pass'},
+     {type:'train',route:'Himeji → Hiroshima',time:'1h',booked:true,detail:'✅ Shinkansen · incluido en el JR Pass · tras visitar el castillo'},
+     {type:'bus',route:'Dentro de Hiroshima',time:'',booked:true,detail:'✅ Bus Meipuru-pu (Sightseeing Loop) — incluido en el JR Pass'}],
    hotel:{name:'Hotel Patio Hiroshima',price:'65,29€',paid:'Alex'},
-   booked:['✅ Entrada Castillo Himeji · Ref RZOQRTJI · 10:30-11:00 · JPY 5.000 (2 adultos)','Hotel Patio Hiroshima · Pagado Alex'],
-   todo:['⏰ Salir del hotel ~08:45 para llegar a Himeji a tiempo (entrada 10:30)','Comprar entrada Museo de la Paz Hiroshima (online)','Free tour Hiroshima — GuruWalk (reservar antes)'],
+   booked:['✅ Entrada Castillo Himeji · Ref RZOQRTJI · 10:30-11:00 · JPY 5.000 · 2 adultos','Hotel Patio Hiroshima · Pagado Alex'],
+   todo:['⏰ Salir hotel ~08:45 (entrada castillo a las 10:30)','Comprar entrada Museo de la Paz Hiroshima online','Free tour Hiroshima — GuruWalk (reservar antes)'],
    activity:'Castillo Himeji (entrada 10:30 ✅). Free tour Hiroshima + Museo bomba atómica.'},
 
   {date:'2026-06-24',weekday:'Miércoles',num:24,month:'Jun',city:'Hiroshima → Miyajima',label:'Isla del Torii flotante ⛩',tags:['train','ferry'],
    transport:[
-     {type:'train',route:'Hiroshima → Miyajimaguchi',time:'25 min',booked:true,detail:'✅ JR Sanyo Main Line · incluido en el pase'},
-     {type:'ferry',route:'Miyajimaguchi ↔ Miyajima',time:'10 min',booked:true,detail:'✅ JR West Miyajima Ferry · incluido en el pase'}],
+     {type:'train',route:'Hiroshima → Miyajimaguchi',time:'25 min',booked:true,detail:'✅ JR Sanyo Main Line · incluido en el JR Pass'},
+     {type:'ferry',route:'Miyajimaguchi ↔ Miyajima',time:'10 min',booked:true,detail:'✅ JR West Miyajima Ferry · incluido en el JR Pass'}],
    hotel:{name:'Hotel Patio Hiroshima',price:'65,29€',paid:'Alex'},
-   booked:['Tren y ferry cubiertos por pase JR'],
-   todo:['Tasa visitante Miyajima (pagar en isla ~300¥)','Santuario Itsukushima (pagar ahí)'],
+   booked:['Tren y ferry cubiertos por JR Pass'],
+   todo:['Tasa visitante Miyajima (~300¥ · pagar en isla)','Santuario Itsukushima (pagar ahí)'],
    activity:'Día completo en Miyajima. Torii flotante del Santuario Itsukushima.'},
 
   {date:'2026-06-25',weekday:'Jueves',num:25,month:'Jun',city:'Hiroshima → Kyoto',label:'Llegada a Kyoto',tags:['train','check'],
    transport:[
-     {type:'train',route:'Hiroshima → Shin-Osaka',time:'1h 25min',booked:true,detail:'✅ Nozomi · incluido en el pase · reservar asiento en máquinas JR'},
-     {type:'train',route:'Shin-Osaka → Kyoto',time:'25 min',booked:true,detail:'✅ Incluido en el pase (último día 5/5)\n⚠️ Carteles amarillos "Transfer to JR Lines"\nCoger SOLO Special Rapid Service (Shin-Kaisoku)'}],
+     {type:'train',route:'Hiroshima → Shin-Osaka',time:'1h 25min',booked:true,detail:'✅ Nozomi · incluido en el JR Pass (último día 5/5)'},
+     {type:'train',route:'Shin-Osaka → Kyoto',time:'25 min',booked:true,detail:'✅ Incluido en el JR Pass\n⚠️ Seguir carteles amarillos "Transfer to JR Lines"\nCoger SOLO Special Rapid Service (Shin-Kaisoku)'}],
    hotel:{name:'Resi Stay Yasaka',price:'161,66€',paid:'Alex'},
-   booked:['Shinkansen cubierto · último día pase JR (5/5)','Hotel Resi Stay Yasaka · 3 noches · Pagado Alex'],
+   booked:['Shinkansen cubierto · último día JR Pass (5/5)','Hotel Resi Stay Yasaka · 3 noches · Pagado Alex'],
    todo:['Entrada Kiyomizu-dera (comprar en el templo)'],
    activity:'Gion: Hanamikoji, Yasaka. Higashiyama: Sannenzaka, Kiyomizu-dera.'},
 
@@ -525,110 +574,108 @@ const days=[
   {date:'2026-06-27',weekday:'Sábado',num:27,month:'Jun',city:'Kyoto',label:'Pabellón Dorado ✨',tags:['free'],
    transport:[],hotel:{name:'Resi Stay Yasaka',price:'161,66€',paid:'Alex'},
    booked:['Hotel Resi Stay Yasaka'],
-   todo:['Comprar billete Matsumoto→Otsuki (Limited Express Azusa) para el 3 jul — hacerlo hoy en máquina estación Kyoto'],
+   todo:['Comprar billete Matsumoto→Otsuki (Limited Express Azusa) para el 3 jul — máquina estación Kyoto'],
    activity:'Kinkaku-ji (Pabellón Dorado). Ryōan-ji, Ninna-ji. Pontocho por la noche.'},
 
   {date:'2026-06-28',weekday:'Domingo',num:28,month:'Jun',city:'Kyoto → Takayama',label:'Pueblo de montaña 🏔',tags:['train','check'],
    transport:[
-     {type:'train',route:'Kyoto → Nagoya',time:'30 min · Salida 07:30',booked:true,detail:'✅ RESERVADO: Nozomi 236\nVagón 4 · Asiento 5-A (Alex) + 5-B (Emma)\nReserva nº 47930 · PIN: 2311 · Tarjeta Visa *2010'},
+     {type:'train',route:'Kyoto → Nagoya',time:'30 min · Salida 07:30',booked:true,detail:'✅ RESERVADO: Nozomi 236\nVagón 4 · Asiento 5-A (Alex) + 5-B (Emma)\nReserva nº 47930 · PIN: 2311 · Visa *2010'},
      {type:'train',route:'Nagoya → Takayama',time:'2h 15min · Salida 08:43',booked:true,detail:'✅ RESERVADO: Hida 3\nVagón 8 · Asiento 12-C (Alex) + 12-D (Emma)\n👉 Lado DERECHO — vistas al río\nTransbordo 39 min en Nagoya'}],
    hotel:{name:'Hostel Murasaki',price:'66,12€',paid:'Alex'},
    booked:['Tren Nozomi 236 + Hida 3 · Reserva nº 47930','Hotel Hostel Murasaki · Pagado Alex'],
-   todo:['Recoger billetes en máquina JR (Visa *2010 + PIN 2311)','Envío maleta Yamato Transport si conviene (~15€/maleta)'],
+   todo:['Recoger billetes en máquina JR (Visa *2010 + PIN 2311)'],
    activity:'Día en Takayama. Calles Sannomachi, mercado Jinya-mae.'},
 
   {date:'2026-06-29',weekday:'Lunes',num:29,month:'Jun',city:'Takayama → Shirakawa-go → Takayama',label:'Pueblo de nieve 🏘',tags:['bus','check'],
    transport:[
-     {type:'bus',route:'Takayama → Shirakawa-go',time:'50 min · Salida 08:50',booked:true,detail:'✅ COMPRADO: Nohi Bus · Takayama Nohi Bus Center\n⚠️ Llegar a las 08:35 (15 min antes)\n🖨 Solo voucher IMPRESO EN PAPEL'},
-     {type:'bus',route:'Shirakawa-go → Takayama',time:'50 min · Salida 13:15',booked:true,detail:'✅ COMPRADO: Nohi Bus\nSalida: Shirakawa-go Bus Terminal · Llegada 14:15'}],
+     {type:'bus',route:'Takayama → Shirakawa-go',time:'50 min · Salida 08:50',booked:true,detail:'✅ COMPRADO: Nohi Bus · Takayama Nohi Bus Center\n⚠️ Llegar a las 08:35 (15 min antes)\n🖨 Solo voucher IMPRESO EN PAPEL — obligatorio'},
+     {type:'bus',route:'Shirakawa-go → Takayama',time:'50 min · Salida 13:15',booked:true,detail:'✅ COMPRADO: Nohi Bus\nSalida Bus Terminal Shirakawa-go · Llegada 14:15'}],
    hotel:{name:'Hostel Murasaki',price:'66,12€',paid:'Alex'},
    booked:['Bus Nohi ida 08:50 · Bus Nohi vuelta 13:15'],
-   todo:['Llevar vouchers bus impresos (obligatorio)'],
+   todo:['Llevar vouchers bus IMPRESOS en papel (obligatorio)'],
    activity:'Excursión a Shirakawa-go. Casas gassho-zukuri con tejados de paja.'},
 
   {date:'2026-06-30',weekday:'Martes',num:30,month:'Jun',city:'Takayama → Kamikochi → Matsumoto',label:'Valle alpino 🏞',tags:['bus','train'],
    transport:[
-     {type:'bus',route:'Takayama → Hirayu Onsen',time:'60 min',booked:false,detail:'🎫 Comprar en momento · Takayama Nohi Bus Center\n⏰ Coger el de 07:00 o 07:40'},
-     {type:'bus',route:'Hirayu Onsen → Kamikochi',time:'25 min',booked:false,detail:'🎫 Bus Alpico · comprar en Hirayu\n⚠️ Reservar vuelta nada más llegar a Kamikochi (se llenan)'},
-     {type:'bus',route:'Kamikochi → Shin-Shimashima',time:'65 min',booked:false,detail:'🎫 Bus Alpico'},
+     {type:'bus',route:'Takayama → Hirayu Onsen',time:'60 min',booked:false,detail:'🎫 Comprar en momento · Takayama Nohi Bus Center · ⏰ Coger el de 07:00 o 07:40'},
+     {type:'bus',route:'Hirayu Onsen → Kamikochi',time:'25 min',booked:false,detail:'🎫 Bus Alpico · ⚠️ Reservar billete vuelta nada más llegar a Kamikochi (se llenan)'},
+     {type:'bus',route:'Kamikochi → Shin-Shimashima',time:'65 min',booked:false,detail:'🎫 Bus Alpico · comprar en Kamikochi'},
      {type:'train',route:'Shin-Shimashima → Matsumoto',time:'30 min',booked:false,detail:'🎫 Tren local · comprar en estación'}],
    hotel:{name:'Riokan Matsukaze',price:'43€',paid:'?'},
-   booked:[],
-   todo:['Reservar billete vuelta Alpico nada más llegar a Kamikochi','Ruta río Azusa: Terminal→Kappabashi→Myojin (~5-6h plano)'],
+   booked:[],todo:['Reservar billete vuelta Alpico nada más llegar','Ruta río Azusa: Terminal→Kappabashi→Myojin (~5-6h plano)'],
    activity:'Trekking en Kamikochi. Río Azusa cristalino. Después Matsumoto.'},
 
   {date:'2026-07-01',weekday:'Miércoles',num:1,month:'Jul',city:'Matsumoto → Nagano',label:'Castillo cuervo negro 🏯',tags:['train'],
-   transport:[{type:'train',route:'Matsumoto → Nagano',time:'50 min',booked:false,detail:'🎫 COMPRAR EN MOMENTO: Shinano Limited Express · ~3.000-3.500¥/persona\nComprar en máquina estación Matsumoto'}],
+   transport:[{type:'train',route:'Matsumoto → Nagano',time:'50 min',booked:false,detail:'🎫 COMPRAR EN MOMENTO: Shinano Limited Express · ~3.000-3.500¥/persona · máquina estación Matsumoto'}],
    hotel:{name:'Gondo Aioi',price:'100,50€',paid:'Emma'},
    booked:['Hotel Gondo Aioi · Pagado Emma'],
-   todo:['🎫 Entrada Castillo Matsumoto · 700¥ (pagar en el castillo)'],
+   todo:['🎫 Entrada Castillo Matsumoto · 700¥ (pagar en castillo)'],
    activity:'Castillo negro de Matsumoto. Lago de "Your Name". Nagano.'},
 
   {date:'2026-07-02',weekday:'Jueves',num:2,month:'Jul',city:'Nagano',label:'Monos en onsen 🐒',tags:['bus'],
    transport:[
-     {type:'bus',route:'Nagano → Kanbayashi Onsen',time:'40-50 min',booked:false,detail:'🎫 Atobus express · ~1.300¥/persona\nSalida norte estación Nagano (Zenkoji exit)\n⏰ Salir 08:00-09:00'},
-     {type:'bus',route:'Kanbayashi Onsen → Parque',time:'30 min andando',booked:false,detail:'🚶 Sendero montaña · no hay otra opción'},
+     {type:'bus',route:'Nagano → Kanbayashi Onsen',time:'40-50 min',booked:false,detail:'🎫 Atobus express · ~1.300¥/persona · salida norte estación Nagano (Zenkoji exit) · ⏰ Salir 08:00-09:00'},
+     {type:'bus',route:'Kanbayashi Onsen → Parque Jigokudani',time:'30 min andando',booked:false,detail:'🚶 Sendero de montaña · no hay otra opción'},
      {type:'bus',route:'Kanbayashi Onsen → Nagano',time:'40-50 min',booked:false,detail:'🎫 Bus vuelta · ~1.300¥/persona'}],
    hotel:{name:'Gondo Aioi',price:'100,50€',paid:'Emma'},
    booked:['Hotel Gondo Aioi · Pagado Emma'],
-   todo:['🎫 Bus ida+vuelta: ~2.600¥/persona (estación Nagano)','🎫 Entrada parque: ~800¥/persona (taquilla)','⚠️ En verano no están en el agua — igualmente merece la pena','🎫 Comprar billete tren Matsumoto→Otsuki (Azusa) esta noche para mañana'],
+   todo:['🎫 Bus ida+vuelta: ~2.600¥/persona · comprar estación Nagano','🎫 Entrada parque: ~800¥/persona · pagar taquilla','⚠️ En verano los monos no están en el agua — igualmente merece la pena','🎫 Comprar billete tren Matsumoto→Otsuki (Azusa) esta noche para mañana (~3.500¥/persona)'],
    activity:'Jigokudani Monkey Park. Monos en el onsen termal.'},
 
   {date:'2026-07-03',weekday:'Viernes',num:3,month:'Jul',city:'Nagano → Lago Kawaguchi',label:'Ruta al Fuji 🗻',tags:['train'],
    transport:[
      {type:'train',route:'Nagano → Matsumoto',time:'50 min',booked:false,detail:'🎫 Shinano Limited Express · ~3.000¥/persona · comprar en momento'},
      {type:'train',route:'Matsumoto → Otsuki',time:'1h 20min',booked:false,detail:'🎫 Limited Express Azusa · ~3.500¥/persona\n⚠️ Comprar el día anterior en estación Nagano'},
-     {type:'train',route:'Otsuki → Kawaguchiko',time:'50 min',booked:false,detail:'🎫 Fujikyu Railway · ~1.200¥/persona\n⚠️ NO cubre pases — pagar aparte'}],
+     {type:'train',route:'Otsuki → Kawaguchiko',time:'50 min',booked:false,detail:'🎫 Fujikyu Railway · ~1.200¥/persona\n⚠️ NO cubre ningún pase — pagar aparte'}],
    hotel:{name:'Togawaso',price:'133,17€',paid:'Alex'},
    booked:['Hotel Togawaso · Pagado Alex'],
-   todo:['Comprar Azusa el día anterior en Nagano','Pagar Fujikyu Railway aparte (no en pases)'],
+   todo:['Comprar Azusa el día anterior en Nagano','Pagar Fujikyu Railway aparte'],
    activity:'Lago Kawaguchi. Bici. Kachi Kachi Ropeway. Pagoda Chureito al atardecer.'},
 
   {date:'2026-07-04',weekday:'Sábado',num:4,month:'Jul',city:'Lago Kawaguchi',label:'Día libre 🗻',tags:['free'],
    transport:[],hotel:{name:'Togawaso',price:'133,17€',paid:'Alex'},
    booked:['Hotel Togawaso · Pagado Alex'],
-   todo:['Valorar alquilar moto o coche','Tour bosque Aokigahara','Oshino Hakkai (pueblito tradicional)'],
+   todo:['Valorar alquilar moto o coche','Tour bosque Aokigahara','Oshino Hakkai'],
    activity:'Aokigahara. Oshino Hakkai. Tarde libre con vistas al Fuji.'},
 
   {date:'2026-07-05',weekday:'Domingo',num:5,month:'Jul',city:'Lago Kawaguchi → Tokyo',label:'Llegada a Tokyo 🗼',tags:['bus'],
-   transport:[{type:'bus',route:'Kawaguchiko → Shibuya (Tokyo)',time:'11:20 → 13:30',booked:true,detail:'✅ COMPRADO: Tokyu Transit XTKT · Ref 1020166334\nKawaguchiko Station · Llegar a las 11:05\nLlegada Shibuya 13:30 · Mostrar ticket PDF'}],
+   transport:[{type:'bus',route:'Kawaguchiko → Shibuya (Tokyo)',time:'11:20 → 13:30',booked:true,detail:'✅ COMPRADO: Tokyu Transit XTKT · Ref 1020166334\nKawaguchiko Station · Llegar a las 11:05\nLlegada Shibuya 13:30 · Mostrar ticket PDF\n⚠️ Equipaje máx 100-150cm · 1 maleta bodega/persona'}],
    hotel:{name:'APA Hotel Shinjuku Kabukicho',price:'432€',paid:'?'},
    booked:['Bus Kawaguchiko→Shibuya · Ref 1020166334 · Pagado'],
-   todo:['Check-in APA Hotel Shinjuku Kabukicho','Explorar Kabukicho + Torre Kabukicho + Godzilla por la tarde'],
-   activity:'Llegada Tokyo 13:30. Traslado Shibuya→hotel. Tarde en Kabukicho.'},
+   todo:['Check-in APA Hotel Shinjuku Kabukicho'],
+   activity:'Llegada a Shibuya a las 13:30. El cruce más famoso del mundo, Hachiko. Andando a Harajuku — Takeshita-dori con su moda excéntrica, crepes y Togo Jinja. Al caer la noche traslado al hotel en Kabukicho y cena por la zona. Sin explorar Shinjuku — lo dejamos para el tour de mañana.'},
 
-  {date:'2026-07-06',weekday:'Lunes',num:6,month:'Jul',city:'Tokyo',label:'Harajuku + Tour Shinjuku nocturno 🌃',tags:['free','check'],
+  {date:'2026-07-06',weekday:'Lunes',num:6,month:'Jul',city:'Tokyo',label:'Meiji + Yoyogi + Omotesando + Tour Shinjuku 🌃',tags:['free','check'],
    transport:[],hotel:{name:'APA Hotel Shinjuku Kabukicho',price:'432€',paid:'?'},
    booked:['✅ Tour Shinjuku nocturno 17h-19h · RESERVADO por Emma · Free tour · Guruwalk'],
-   todo:['Punto encuentro: Tochomae Station, 2-chōme-8-1 Nishishinjuku · Salida A4\nNO ir andando desde hotel ni otras estaciones Shinjuku'],
-   activity:'Mañana/tarde: Harajuku (Takeshita-dori) + Parque Yoyogi + Meiji Jingu.\n17h-19h: Tour Shinjuku nocturno: Gov Building → Omoide Yokocho → Kabukicho → Golden Gai → Hanazono Shrine.\nEl tour termina a 5 min del hotel 🎉'},
+   todo:['⏰ Punto encuentro tour: Tochomae Station, 2-chōme-8-1 Nishishinjuku · Salida A4\nNO ir andando desde hotel ni otras estaciones de Shinjuku'],
+   activity:'Mañana: Shinjuku Gyoen (el gran jardín imperial, completamente diferente al Shinjuku de neones). Meiji Jingu y Parque Yoyogi tranquilos. Bajada por Omotesando.\n17h-19h: Tour nocturno Shinjuku — Government Building → Omoide Yokocho → Kabukicho → Golden Gai → Hanazono Shrine. El tour termina a 5 min andando del hotel. 🎉'},
 
-  {date:'2026-07-07',weekday:'Martes',num:7,month:'Jul',city:'Tokyo',label:'Akihabara + Asakusa + Skytree ⚡',tags:['free'],
-   transport:[],hotel:{name:'APA Hotel Shinjuku Kabukicho',price:'432€',paid:'?'},
-   booked:[],
-   todo:['⚡ Tokyo Skytree OPCIONAL hoy o mañana — hacer solo un día\nEntrada: ~2.100¥ (comprar ahí)'],
-   activity:'Akihabara + Ueno + Asakusa + Senso-ji.\n⚡ OPCIONAL: Tokyo Skytree (a 10 min de Asakusa).'},
-
-  {date:'2026-07-08',weekday:'Miércoles',num:8,month:'Jul',city:'Tokyo',label:'TeamLabs Borderless + Ginza 🎨',tags:['check'],
-   transport:[],hotel:{name:'APA Hotel Shinjuku Kabukicho',price:'432€',paid:'?'},
-   booked:[],
-   todo:['🎨 Reservar TeamLabs Borderless ANTES del viaje · ~30-40€/persona · Azabudai Hills','⚡ Tokyo Skytree OPCIONAL si no se hizo ayer (~2.100¥)'],
-   activity:'Mañana: TeamLabs Borderless (Azabudai Hills) 2-3h.\nTarde: Ginza tranquilo.\n⚡ OPCIONAL: Skytree si no se hizo ayer.'},
-
-  {date:'2026-07-09',weekday:'Jueves',num:9,month:'Jul',city:'Tokyo',label:'Shibuya + Shimokitazawa 🌆',tags:['free'],
+  {date:'2026-07-07',weekday:'Martes',num:7,month:'Jul',city:'Tokyo',label:'Asakusa + Kappabashi festival + Ueno + Akihabara',tags:['free'],
    transport:[],hotel:{name:'APA Hotel Shinjuku Kabukicho',price:'432€',paid:'?'},
    booked:[],todo:[],
-   activity:'Shibuya: cruce famoso de día y de noche + Templo Meiji Jingu.\nShimokitazawa: barrio vintage alternativo. Noche en Shibuya.'},
+   activity:'08:00: Asakusa con Senso-ji casi vacío y las calles de Nakamise. Kappabashi — Festival Tanabata Matsuri (6-11 jul): puestos de comida, decoraciones y danza awa odori en la calle peatonal, a 10 min al norte de Ueno. Ueno y mercado Ameyoko para comer. Akihabara de tarde y noche con todos los neones encendidos.'},
+
+  {date:'2026-07-08',weekday:'Miércoles',num:8,month:'Jul',city:'Tokyo',label:'Toyosu + Ginza 🎨',tags:['check'],
+   transport:[],hotel:{name:'APA Hotel Shinjuku Kabukicho',price:'432€',paid:'?'},
+   booked:[],
+   todo:['🎨 Reservar TeamLabs Planets ANTES del viaje · ~30-40€/persona · Toyosu\n⚠️ Llevar pantalones remangables por encima de la rodilla'],
+   activity:'Mañana: TeamLabs Planets en Toyosu — salas inmersivas de luz y agua (2-3h). Al salir, metro línea Yurakucho hasta Ginza. Tarde tranquila paseando por las avenidas elegantes, tomando algo y viendo escaparates.'},
+
+  {date:'2026-07-09',weekday:'Jueves',num:9,month:'Jul',city:'Tokyo',label:'Kichijoji + Shimokitazawa + Shibuya 🎸',tags:['free'],
+   transport:[],hotel:{name:'APA Hotel Shinjuku Kabukicho',price:'432€',paid:'?'},
+   booked:[],todo:[],
+   activity:'Mañana en Kichijoji — parque Inokashira y calles comerciales cubiertas. Un tren a Shimokitazawa — callejuelas bohemias, tiendas vintage, cafeterías de especialidad, ritmo lento. Al caer la tarde Shibuya para el remate final y la noche.\n⚠️ Volver al hotel a hora decente — vuelo día 10 a las 11:30, salir del hotel a las 07:00.'},
 
   {date:'2026-07-10',weekday:'Viernes',num:10,month:'Jul',city:'Tokyo → Seúl',label:'Vuelo a Seúl ✈',tags:['fly'],
-   transport:[{type:'fly',route:'NRT → ICN',time:'11:30 → 14:15',booked:true,detail:'✅ Eastar Jet ZE602 · Narita NRT → Incheon ICN\nRef BES-32087550 · Total 217,66€\n⚠️ Aeropuerto NARITA — no Haneda'}],
+   transport:[{type:'fly',route:'NRT → ICN',time:'11:30 → 14:15',booked:true,detail:'✅ Eastar Jet ZE602 · Narita NRT → Incheon ICN\nRef BES-32087550 · 217,66€\n⚠️ Aeropuerto NARITA — no Haneda'}],
    hotel:null,
    booked:['Vuelo ZE602 NRT→ICN · Ref BES-32087550 · Pagado'],
-   todo:['Salir hotel ~08:00-08:30 para Narita (al menos 3h antes)'],
+   todo:['⏰ Salir hotel ~07:00 para Narita (al menos 3h antes)'],
    activity:'Vuelo Tokyo → Seúl. Tarde en Seúl.'},
 
   {date:'2026-07-11',weekday:'Sábado',num:11,month:'Jul',city:'Seúl → Barcelona',label:'Vuelta a casa 🏠',tags:['fly'],
-   transport:[{type:'fly',route:'ICN → BCN',time:'11:40 → 22:25',booked:true,detail:'✅ Lufthansa LH719 + LH1818 · 1 escala · 17h 45min\nRef YHIPAI · PIN 4394 · Ref cliente 40-983696499\nE-ticket Alex: 2209491148175\nE-ticket Emma: 2209491148176\nEquipaje: 1 mano (23x40x55cm, 8kg) + 1 facturado (23kg)'}],
+   transport:[{type:'fly',route:'ICN → BCN',time:'11:40 → 22:25',booked:true,detail:'✅ Lufthansa LH719 + LH1818 · 1 escala · 17h 45min\nRef YHIPAI · PIN 4394 · Ref cliente 40-983696499\nE-ticket Alex: 2209491148175\nE-ticket Emma: 2209491148176\nEquipaje: 1 mano (23x40x55cm,8kg) + 1 facturado (23kg)'}],
    hotel:null,
    booked:['Vuelo LH719+LH1818 ICN→BCN · Ref YHIPAI · Pagado'],
    todo:['Check-in online Lufthansa día anterior','Salir hotel ~08:30 para Incheon'],
@@ -639,70 +686,165 @@ const days=[
 function renderTimeline(){
   const track=document.getElementById('timeline-track');
   track.innerHTML=days.map((d,i)=>{
-    const status=d.date<TODAY_STR?'visited':d.date===TODAY_STR?'current':'pending';
-    const cityShort=d.city.split('→')[0].trim().split(' ')[0];
-    return `<div class="tl-item ${status}" onclick="showDay(${i})">
+    const s=d.date<TODAY_STR?'tl-visited':d.date===TODAY_STR?'tl-current':'tl-pending';
+    const city=d.city.split('→')[0].trim().split(' ')[0];
+    return `<div class="tl-item ${s}" onclick="showDay(${i})">
       <div class="tl-dot"></div>
-      <div class="tl-city">${cityShort}</div>
+      <div class="tl-city">${city}</div>
       <div class="tl-date">${d.num} ${d.month}</div>
     </div>`;
   }).join('');
-
-  // Scroll to today
   setTimeout(()=>scrollToToday(true),100);
-
-  // Show back-today button on scroll
   const wrapper=document.getElementById('timeline-wrapper');
   wrapper.addEventListener('scroll',()=>{
-    const btn=document.getElementById('back-today-btn');
     const todayIdx=days.findIndex(d=>d.date===TODAY_STR);
-    if(todayIdx<0){btn.classList.remove('visible');return;}
+    if(todayIdx<0)return;
     const items=track.querySelectorAll('.tl-item');
     if(!items[todayIdx])return;
-    const itemLeft=items[todayIdx].offsetLeft;
-    const wrapperScroll=wrapper.scrollLeft;
-    const wrapperWidth=wrapper.clientWidth;
-    const inView=itemLeft>=wrapperScroll&&itemLeft<=(wrapperScroll+wrapperWidth-80);
-    btn.classList.toggle('visible',!inView);
+    const il=items[todayIdx].offsetLeft;
+    const ws=wrapper.scrollLeft,ww=wrapper.clientWidth;
+    document.getElementById('back-today-btn').classList.toggle('visible',!(il>=ws&&il<=(ws+ww-72)));
   });
 }
-
 function scrollToToday(instant){
   const wrapper=document.getElementById('timeline-wrapper');
   const track=document.getElementById('timeline-track');
-  const todayIdx=days.findIndex(d=>d.date===TODAY_STR);
-  const idx=todayIdx>=0?todayIdx:0;
+  const idx=Math.max(0,days.findIndex(d=>d.date===TODAY_STR));
   const items=track.querySelectorAll('.tl-item');
   if(!items[idx])return;
-  const itemLeft=items[idx].offsetLeft;
-  const center=itemLeft-(wrapper.clientWidth/2)+40;
+  const center=items[idx].offsetLeft-(wrapper.clientWidth/2)+36;
   wrapper.scrollTo({left:Math.max(0,center),behavior:instant?'auto':'smooth'});
 }
 renderTimeline();
+
+// ═══ TASKS SYSTEM ═══
+const TASKS_KEY='j26_tasks';
+const TASK_STATE_KEY='j26_task_state';
+
+const defaultTasks=[
+  {id:'t_print_bus',title:'Imprimir vouchers bus Nohi',desc:'Antes de salir de Barcelona — solo papel físico, NO pantallazos',day:'antes',dayLabel:'Antes del viaje',preset:true},
+  {id:'t_jr_pass',title:'JR Kansai-Hiroshima Pass',desc:'✅ Comprado · Reserva 49688 · Receipt ADW2913K · Recoger en KIX con Visa *2010 + PIN 2311',day:'2026-06-21',dayLabel:'21 Jun · Osaka',preset:true,doneByDefault:true},
+  {id:'t_teamlabs',title:'Reservar TeamLabs Planets',desc:'Toyosu · ~30-40€/persona · se agotan semanas antes · llevar pantalones remangables',day:'antes',dayLabel:'Antes del viaje',preset:true},
+  {id:'t_suica',title:'Gestionar tarjeta SUICA en KIX',desc:'Nada más llegar al aeropuerto · día 21 jun',day:'2026-06-21',dayLabel:'21 Jun · Osaka',preset:true},
+  {id:'t_azusa',title:'Comprar tren Matsumoto→Otsuki (Azusa)',desc:'Máquina estación Nagano · noche del 2 jul · ~3.500¥/persona',day:'2026-07-02',dayLabel:'2 Jul · Nagano',preset:true},
+];
+
+function loadTaskState(){try{return JSON.parse(localStorage.getItem(TASK_STATE_KEY)||'{}');}catch(e){return{};}}
+function saveTaskState(s){try{localStorage.setItem(TASK_STATE_KEY,JSON.stringify(s));}catch(e){}}
+function loadCustomTasks(){try{return JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');}catch(e){return[];}}
+function saveCustomTasks(t){try{localStorage.setItem(TASKS_KEY,JSON.stringify(t));}catch(e){}}
+
+function getAllTasks(){
+  const custom=loadCustomTasks();
+  return [...defaultTasks,...custom];
+}
+
+function isTaskDone(id){
+  const state=loadTaskState();
+  const task=defaultTasks.find(t=>t.id===id);
+  if(task&&task.doneByDefault&&state[id]===undefined)return true;
+  return !!state[id];
+}
+
+function toggleTask(id){
+  const state=loadTaskState();
+  const task=defaultTasks.find(t=>t.id===id);
+  if(task&&task.doneByDefault&&state[id]===undefined){state[id]=false;}
+  else{state[id]=!state[id];}
+  saveTaskState(state);
+  renderHomePending();
+}
+
+function renderHomePending(){
+  const all=getAllTasks();
+  const pending=all.filter(t=>!isTaskDone(t.id));
+  const section=document.getElementById('home-pending');
+  if(pending.length===0){
+    section.innerHTML=`<div class="empty-pending">🎉 ¡Todo gestionado!</div>`;
+    return;
+  }
+  let html=`<div class="pending-card">`;
+  pending.forEach(t=>{
+    html+=`<div class="pending-item">
+      <div class="pending-check" onclick="toggleTask('${t.id}')"></div>
+      <div class="pending-info">
+        <div class="pending-title">${t.title}</div>
+        ${t.desc?`<div class="pending-sub">${t.desc}</div>`:''}
+        <div class="pending-day-tag">${t.dayLabel||'Antes del viaje'}</div>
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
+  section.innerHTML=html;
+}
+renderHomePending();
+
+function openDoneModal(){
+  const all=getAllTasks();
+  const done=all.filter(t=>isTaskDone(t.id));
+  const list=document.getElementById('done-list');
+  if(done.length===0){list.innerHTML=`<div style="text-align:center;color:var(--ink-light);padding:20px;font-size:14px;">Todavía no hay tareas finalizadas</div>`;
+  }else{
+    list.innerHTML=done.map(t=>`
+      <div class="done-item">
+        <div class="done-item-title">${t.title}</div>
+        ${t.desc?`<div class="done-item-sub">${t.desc}</div>`:''}
+        <div class="done-item-day">${t.dayLabel||'Antes del viaje'}</div>
+      </div>`).join('');
+  }
+  document.getElementById('done-modal').classList.remove('hidden');
+}
+function closeDoneModal(){document.getElementById('done-modal').classList.add('hidden');}
+
+// ADD TASK MODAL
+function openAddTaskModal(){
+  const sel=document.getElementById('at-day');
+  sel.innerHTML=`<option value="antes">Antes del viaje</option>`;
+  days.forEach(d=>{
+    const o=document.createElement('option');
+    o.value=d.date;
+    o.textContent=`${d.num} ${d.month} · ${d.city.split('→')[0].trim()}`;
+    sel.appendChild(o);
+  });
+  document.getElementById('at-title').value='';
+  document.getElementById('at-desc').value='';
+  document.getElementById('add-task-modal').classList.remove('hidden');
+}
+function closeAddTaskModal(){document.getElementById('add-task-modal').classList.add('hidden');}
+function saveNewTask(){
+  const title=document.getElementById('at-title').value.trim();
+  if(!title)return;
+  const desc=document.getElementById('at-desc').value.trim();
+  const sel=document.getElementById('at-day');
+  const day=sel.value;
+  const dayLabel=sel.options[sel.selectedIndex].text;
+  const id='t_custom_'+Date.now();
+  const custom=loadCustomTasks();
+  custom.push({id,title,desc,day,dayLabel,preset:false});
+  saveCustomTasks(custom);
+  closeAddTaskModal();
+  renderHomePending();
+}
 
 // ═══ ITINERARY ═══
 const tagLabels={train:'🚄 Tren',bus:'🚌 Bus',fly:'✈ Vuelo',ferry:'⛴ Ferry',free:'🗺 Libre',check:'📋 Gestiones'};
 function renderItinerary(){
   const list=document.getElementById('itinerary-list');
   list.innerHTML=days.map((d,i)=>{
-    const isPast=d.date<TODAY_STR;
-    const isToday=d.date===TODAY_STR;
-    const cardCls=isToday?'today':isPast?'past':'future';
-    const badgeCls=isToday?'today-badge':isPast?'past-badge':'future-badge';
-    const numCls=isToday?'today-num':isPast?'past-num':'future-num';
-    const monCls=isToday?'today-mon':isPast?'past-mon':'future-mon';
-    const cityCls=isToday?'today-city':isPast?'past-city':'future-city';
-    const tagsHtml=d.tags.map(t=>`<span class="tag tag-${t}">${tagLabels[t]}</span>`).join('');
-    return `<div class="day-card ${cardCls}" onclick="showDay(${i})">
+    const isPast=d.date<TODAY_STR,isToday=d.date===TODAY_STR;
+    const cc=isToday?'today':isPast?'past':'future';
+    const bc=isToday?'badge-today':isPast?'badge-past':'badge-future';
+    const nc=isToday?'num-today':isPast?'num-past':'num-future';
+    const mc=isToday?'mon-today':isPast?'mon-past':'mon-future';
+    const cityc=isToday?'city-today':isPast?'city-past':'city-future';
+    const tags=d.tags.map(t=>`<span class="tag tag-${t}">${tagLabels[t]}</span>`).join('');
+    return `<div class="day-card ${cc}" onclick="showDay(${i})">
       <div class="day-card-header">
-        <div class="day-badge ${badgeCls}">
-          <div class="day-num ${numCls}">${d.num}</div>
-          <div class="day-mon ${monCls}">${d.month}</div>
-        </div>
+        <div class="day-badge ${bc}"><div class="day-num ${nc}">${d.num}</div><div class="day-mon ${mc}">${d.month}</div></div>
         <div class="day-info">
-          <div class="day-city ${cityCls}">${d.city}</div>
+          <div class="day-city ${cityc}">${d.city}</div>
           <div class="day-label">${d.weekday} · ${d.label}</div>
-          <div class="day-tags">${tagsHtml}</div>
+          <div class="day-tags">${tags}</div>
         </div>
         <div class="day-arrow">›</div>
       </div>
@@ -716,64 +858,78 @@ function showDay(i){
   const d=days[i];
   document.getElementById('detail-city').textContent=d.city;
   document.getElementById('detail-date').textContent=`${d.weekday}, ${d.num} ${d.month} 2026 · ${d.label}`;
-  const icons={train:'🚄',bus:'🚌',fly:'✈',ferry:'⛴',walk:'🚶'};
+  const icons={train:'🚄',bus:'🚌',fly:'✈',ferry:'⛴'};
   let html='';
 
   if(d.transport.length>0){
-    html+=`<div class="detail-section"><div class="detail-section-title">Trayectos</div>`;
+    html+=`<div class="detail-section"><div class="ds-title">Trayectos</div>`;
     d.transport.forEach(t=>{
-      const bc=t.booked?'booked':'todo';
-      const det=t.detail?t.detail.replace(/\n/g,'<br>'):'';
+      const bc=t.booked?'td-booked':'td-todo';
       html+=`<div class="transport-card">
         <div class="transport-header">
-          <div class="transport-icon ${t.type}">${icons[t.type]||'🚶'}</div>
+          <div class="transport-icon ti-${t.type}">${icons[t.type]||'🚶'}</div>
           <div><div class="transport-route">${t.route}</div><div class="transport-time">${t.time}</div></div>
         </div>
-        ${det?`<div class="transport-detail ${bc}">${det}</div>`:''}
+        ${t.detail?`<div class="transport-detail ${bc}">${t.detail.replace(/\n/g,'<br>')}</div>`:''}
       </div>`;
     });
     html+=`</div>`;
   }
 
   if(d.hotel){
-    html+=`<div class="detail-section"><div class="detail-section-title">Alojamiento</div>
-      <div class="hotel-card">
-        <div style="font-size:22px">🏨</div>
-        <div>
-          <div class="hotel-name">${d.hotel.name}</div>
-          <div class="hotel-price">${d.hotel.price}/noche</div>
-          ${d.hotel.paid!=='?'?`<div class="hotel-paid">✓ Pagado por ${d.hotel.paid}</div>`:'<div class="hotel-price">Por confirmar</div>'}
-        </div>
-      </div></div>`;
+    html+=`<div class="detail-section"><div class="ds-title">Alojamiento</div>
+      <div class="hotel-card"><div style="font-size:22px">🏨</div>
+        <div><div class="hotel-name">${d.hotel.name}</div><div class="hotel-price">${d.hotel.price}/noche</div>
+        ${d.hotel.paid!=='?'?`<div class="hotel-paid">✓ Pagado por ${d.hotel.paid}</div>`:'<div class="hotel-price">Por confirmar</div>'}
+        </div></div></div>`;
   }
 
   if(d.booked.length>0){
-    html+=`<div class="detail-section"><div class="detail-section-title">✅ Ya gestionado</div><div class="task-card">`;
-    d.booked.forEach(t=>html+=`<div class="task-item"><div class="task-dot green"></div><div>${t}</div></div>`);
+    html+=`<div class="detail-section"><div class="ds-title">✅ Ya gestionado</div><div class="task-card">`;
+    d.booked.forEach(t=>html+=`<div class="task-item"><div class="task-dot td-green"></div><div>${t}</div></div>`);
     html+=`</div></div>`;
   }
 
   if(d.todo.length>0){
-    html+=`<div class="detail-section"><div class="detail-section-title">🎫 Gestionar aquí</div><div class="task-card">`;
-    d.todo.forEach(t=>html+=`<div class="task-item"><div class="task-dot gold"></div><div>${t.replace(/\n/g,'<br>')}</div></div>`);
+    html+=`<div class="detail-section"><div class="ds-title">🎫 Gestionar aquí</div><div class="task-card">`;
+    d.todo.forEach(t=>html+=`<div class="task-item"><div class="task-dot td-gold"></div><div>${t.replace(/\n/g,'<br>')}</div></div>`);
+    html+=`</div></div>`;
+  }
+
+  // Day tasks from task system
+  const allTasks=getAllTasks();
+  const dayTasks=allTasks.filter(t=>t.day===d.date);
+  if(dayTasks.length>0){
+    const pending=dayTasks.filter(t=>!isTaskDone(t.id));
+    const done=dayTasks.filter(t=>isTaskDone(t.id));
+    html+=`<div class="detail-section"><div class="ds-title">📋 Tareas del día</div><div class="day-pending-card">`;
+    pending.forEach(t=>{
+      html+=`<div class="dp-item">
+        <div class="dp-check" onclick="toggleTask('${t.id}');showDay(${i})"></div>
+        <div class="dp-info"><div class="dp-title">${t.title}</div>${t.desc?`<div class="dp-desc">${t.desc}</div>`:''}</div>
+      </div>`;
+    });
+    done.forEach(t=>{
+      html+=`<div class="dp-item dp-done">
+        <div class="dp-check dp-checked"></div>
+        <div class="dp-info"><div class="dp-title" style="text-decoration:line-through">${t.title}</div>${t.desc?`<div class="dp-desc">${t.desc}</div>`:''}</div>
+      </div>`;
+    });
     html+=`</div></div>`;
   }
 
   if(d.activity){
-    html+=`<div class="detail-section"><div class="detail-section-title">Actividad del día</div>
+    html+=`<div class="detail-section"><div class="ds-title">Actividad del día</div>
       <div class="activity-card"><div class="activity-text">${d.activity.replace(/\n/g,'<br>')}</div></div></div>`;
   }
 
   // Day notes
   const notes=loadNotes().filter(n=>n.date===d.date);
   if(notes.length>0){
-    html+=`<div class="detail-section"><div class="detail-section-title">📝 Notas del día</div><div class="day-notes-card">`;
+    html+=`<div class="detail-section"><div class="ds-title">📝 Notas del día</div><div class="day-notes-card">`;
     notes.forEach(n=>{
-      const tagsHtml=n.tags&&n.tags.length>0?n.tags.map(t=>`<span class="day-note-tag">#${t}</span>`).join(''):'';
-      html+=`<div class="day-note-item">
-        <div class="day-note-meta"><span>${n.savedAt}</span>${tagsHtml}</div>
-        <div>${n.text.replace(/\n/g,'<br>')}</div>
-      </div>`;
+      const tags=n.tags&&n.tags.length>0?n.tags.map(t=>`<span class="day-note-tag">#${t}</span>`).join(''):'';
+      html+=`<div class="day-note-item"><div class="day-note-meta"><span>${n.savedAt}</span>${tags}</div><div>${n.text.replace(/\n/g,'<br>')}</div></div>`;
     });
     html+=`</div></div>`;
   }
@@ -783,64 +939,28 @@ function showDay(i){
 }
 function goBack(){showScreen('itinerary');}
 
-// ═══ PENDING ═══
-const PENDING_KEY='japan2026_pending';
-const pendingDefs=[
-  {id:'print-bus',title:'Imprimir vouchers bus Nohi',sub:'Solo papel físico, NO pantallazos',day:'Antes del viaje',urgent:true},
-  {id:'jr-pass',title:'Comprar JR Kansai-Hiroshima Pass',sub:'westjr.co.jp · 17.000¥/persona (~92€)',day:'Antes del viaje',urgent:true},
-  {id:'teamlabs',title:'Reservar TeamLabs Borderless',sub:'Azabudai Hills · ~30-40€/persona',day:'Antes del viaje',urgent:true},
-  {id:'suica',title:'Gestionar tarjeta SUICA en KIX',sub:'Nada más llegar al aeropuerto · 21 jun',day:'21 Jun',urgent:false},
-  {id:'azusa',title:'Comprar tren Matsumoto→Otsuki (Azusa)',sub:'Máquina estación Nagano · noche del 2 jul · ~3.500¥/persona',day:'2 Jul (noche)',urgent:false},
-];
-function loadPending(){try{return JSON.parse(localStorage.getItem(PENDING_KEY)||'{}')}catch(e){return {};}}
-function savePending(d){try{localStorage.setItem(PENDING_KEY,JSON.stringify(d));}catch(e){}}
-function renderHomePending(){
-  const state=loadPending();
-  const pending=pendingDefs.filter(t=>!state[t.id+'_done']);
-  const section=document.getElementById('home-pending');
-  if(pending.length===0){section.innerHTML='';return;}
-  let html=`<div class="section-title">Pendiente</div><div class="pending-card">`;
-  pending.slice(0,4).forEach(t=>{
-    const done=state[t.id+'_done'];
-    html+=`<div class="pending-item">
-      <div class="pending-check ${done?'done':''}" onclick="togglePending('${t.id}')"></div>
-      <div class="pending-info">
-        <div class="pending-title ${done?'done-text':''}">${t.title}</div>
-        <div class="pending-sub">${t.sub}</div>
-        <div class="pending-day">${t.day}</div>
-        ${done?`<textarea class="pending-note-input" placeholder="Añade confirmación o referencia..." onchange="savePNote('${t.id}',this.value)">${state[t.id+'_note']||''}</textarea>`:''}
-      </div>
-    </div>`;
-  });
-  html+=`</div>`;
-  section.innerHTML=html;
-}
-function togglePending(id){const s=loadPending();s[id+'_done']=!s[id+'_done'];savePending(s);renderHomePending();}
-function savePNote(id,v){const s=loadPending();s[id+'_note']=v;savePending(s);}
-renderHomePending();
-
 // ═══ DOCS ═══
 function renderDocs(){
-  const docs=[
-    {group:'✈️ Vuelos',items:[
-      {icon:'✈',title:'Barcelona → Osaka (ida)',subtitle:'Air China · 20-21 jun',rows:[
+  const groups=[
+    {g:'✈️ Vuelos',items:[
+      {icon:'✈',t:'Barcelona → Osaka (ida)',s:'Air China · 20-21 jun',rows:[
         ['Vuelo 1','CA840 · BCN→PVG'],['Fecha','20 jun'],['Salida','12:10'],['Llegada','06:45 (21 jun)'],
         ['Vuelo 2','CA857 · PVG→KIX'],['Fecha','21 jun'],['Salida','11:50 ⚠️'],['Llegada','15:25'],
         ['Referencia','QCS0M4'],['GoToGate','1101-441-191'],
         ['Ticket Emma','YYEZOL 999-6045139660'],['Ticket Alex','YYEZOL 999-6045139659'],['Total','797€']
       ]},
-      {icon:'✈',title:'Tokyo → Seúl',subtitle:'Eastar Jet ZE602 · 10 jul',rows:[
+      {icon:'✈',t:'Tokyo → Seúl',s:'Eastar Jet ZE602 · 10 jul',rows:[
         ['Vuelo','ZE602'],['Fecha','10 jul'],['Salida','11:30 (Narita NRT)'],['Llegada','14:15 (Incheon)'],['Ref','BES-32087550'],['Total','217,66€']
       ]},
-      {icon:'✈',title:'Seúl → Barcelona (vuelta)',subtitle:'Lufthansa · 11 jul',rows:[
+      {icon:'✈',t:'Seúl → Barcelona (vuelta)',s:'Lufthansa · 11 jul',rows:[
         ['Vuelos','LH719 + LH1818'],['Fecha','11 jul'],['Salida','11:40 (ICN)'],['Llegada','22:25 (BCN)'],
         ['Ref Lufthansa','YHIPAI'],['PIN','4394'],['Ref cliente','40-983696499'],
         ['E-ticket Alex','2209491148175'],['E-ticket Emma','2209491148176'],
         ['Total','604€'],['Equipaje','1 mano (23x40x55,8kg)+1 facturado (23kg)']
       ]}
     ]},
-    {group:'🚄 Trenes reservados',items:[
-      {icon:'🚄',title:'Kyoto → Nagoya → Takayama',subtitle:'28 jun · JR-West Online',rows:[
+    {g:'🚄 Trenes reservados',items:[
+      {icon:'🚄',t:'Kyoto → Nagoya → Takayama',s:'28 jun · JR-West Online',rows:[
         ['Reserva nº','47930'],['Receipt','ADV4069K'],
         ['Kyoto salida','07:30 · Nozomi 236'],['Asientos Kyoto','Vagón 4 · 5-A + 5-B'],
         ['Nagoya llegada','08:04 (transbordo 39 min)'],
@@ -848,30 +968,40 @@ function renderDocs(){
         ['Takayama llegada','10:58'],['PIN recoger','2311 · Visa *2010'],['Precio','23.440¥/persona']
       ]}
     ]},
-    {group:'🚌 Buses reservados',items:[
-      {icon:'🚌',title:'Takayama ↔ Shirakawa-go',subtitle:'29 jun · Nohi Bus',rows:[
+    {g:'🚌 Buses reservados',items:[
+      {icon:'🚌',t:'Takayama ↔ Shirakawa-go',s:'29 jun · Nohi Bus',rows:[
         ['Ida','08:50 Takayama → 09:50 Shirakawa-go'],
         ['Vuelta','13:15 Shirakawa-go → 14:15 Takayama'],
-        ['⚠️','Solo voucher IMPRESO en papel'],['Cancelación','Gratis hasta 22 jun 06:50'],
+        ['⚠️ Importante','Solo voucher IMPRESO en papel'],
+        ['Cancelación','Gratis hasta 22 jun 06:50'],
         ['Operador','Nohi Bus · +815036465925']
       ]},
-      {icon:'🚌',title:'Kawaguchiko → Shibuya (Tokyo)',subtitle:'5 jul · Tokyu Transit',rows:[
+      {icon:'🚌',t:'Kawaguchiko → Shibuya (Tokyo)',s:'5 jul · Tokyu Transit',rows:[
         ['Operador','Tokyu Transit XTKT'],['Ref','1020166334'],
         ['Salida','11:20 · Kawaguchiko Station (llegar 11:05)'],
         ['Llegada','13:30 · Shibuya, Tokyo'],['Total','24,89€ · Pagado'],
         ['⚠️ Equipaje','Máx 100-150cm · 1 maleta bodega/persona']
       ]}
     ]},
-    {group:'🎫 Entradas compradas',items:[
-      {icon:'🎢',title:'Universal Studios Japan',subtitle:'22 jun · Klook',rows:[
+    {g:'🎫 Entradas compradas',items:[
+      {icon:'🎢',t:'Universal Studios Japan',s:'22 jun · Klook',rows:[
         ['Booking','NVN221737'],['Fecha','22 jun 2026'],['Tipo','Pase 1 día · 2 adultos'],['Total','106€ · Pagado']
       ]},
-      {icon:'⚔️',title:'Castillo Himeji',subtitle:'23 jun · 10:30-11:00',rows:[
+      {icon:'⚔️',t:'Castillo Himeji',s:'23 jun · 10:30-11:00',rows:[
         ['Ref','RZOQRTJI'],['Fecha y hora','23 jun · 10:30-11:00'],['Tipo','2 adultos'],['Total','JPY 5.000 · Pagado']
       ]}
     ]},
-    {group:'🏨 Hoteles',items:[
-      {icon:'🏨',title:'Resumen alojamientos',subtitle:'21 jun — 11 jul',rows:[
+    {g:'🚄 Pases de transporte',items:[
+      {icon:'🚄',t:'JR Kansai-Hiroshima Area Pass',s:'21-25 jun · ✅ COMPRADO',rows:[
+        ['Estado','✅ COMPRADO · 7 junio 2026'],['Reserva nº','49688'],['Receipt','ADW2913K'],
+        ['Válido','21-25 junio · 2 adultos'],['Precio','34.000¥ (2 personas)'],
+        ['Recoger','Máquina JR aeropuerto KIX (FUERA de tornos)'],
+        ['Llevar','Tarjeta Visa física *2010 + PIN 2311'],
+        ['Incluye','KIX→Osaka · USJ · Himeji · Hiroshima · Miyajima · Kyoto']
+      ]}
+    ]},
+    {g:'🏨 Hoteles',items:[
+      {icon:'🏨',t:'Resumen alojamientos',s:'21 jun — 11 jul',rows:[
         ['21-22 jun · Osaka','Bestie Doyanen · 45,89€ · Emma'],
         ['23-24 jun · Hiroshima','Hotel Patio Hiroshima · 65,29€ · Alex'],
         ['25-27 jun · Kyoto','Resi Stay Yasaka · 161,66€ · Alex'],
@@ -882,34 +1012,28 @@ function renderDocs(){
         ['5-9 jul · Tokyo','APA Hotel Shinjuku Kabukicho · 432€']
       ]}
     ]},
-    {group:'🚄 Pases de transporte',items:[
-      {icon:'🚄',title:'JR Kansai-Hiroshima Area Pass',subtitle:'21-25 jun · 5 días',rows:[
-        ['Estado','⚠️ PENDIENTE COMPRAR'],['Web','westjr.co.jp (entre semana)'],
-        ['Precio','17.000¥/persona (~92€)'],['Validez','5 días desde activación en KIX'],
-        ['Incluye','KIX→Osaka · USJ · Himeji · Hiroshima · Miyajima · Kyoto'],
-        ['⚠️','Canjear en oficina JR aeropuerto KIX el 21 jun']
-      ]}
-    ]},
-    {group:'📱 Apps útiles',items:[
-      {icon:'📱',title:'Apps recomendadas',subtitle:'Para el viaje',rows:[
+    {g:'📱 Apps útiles',items:[
+      {icon:'📱',t:'Apps recomendadas',s:'Para el viaje',rows:[
         ['Radical Storage','Guardar maletas cerca de estaciones'],
         ['Kuri Kuli','Traduce menús con la cámara'],
-        ['Google Maps','Descargar mapas offline antes de ir'],
         ['HappyCow','Restaurantes veganos y veggie'],
+        ['Google Maps','Descargar mapas offline antes de ir'],
         ['IC Card / SUICA','Gestionar en KIX al llegar'],
-        ['Guruwalk','Tour Shinjuku nocturno (reservado)']
+        ['Guruwalk','Tour Shinjuku (ya reservado)']
       ]}
     ]}
   ];
+
   let html='';
-  docs.forEach(group=>{
-    html+=`<div class="doc-group"><div class="section-title">${group.group}</div>`;
-    group.items.forEach((item,idx)=>{
-      const id=`doc-${group.group.charCodeAt(0)}-${idx}`;
-      html+=`<div class="doc-card" id="${id}">
-        <div class="doc-header" onclick="toggleDoc('${id}')">
+  groups.forEach((grp,gi)=>{
+    html+=`<div class="doc-group"><div class="section-title">${grp.g}</div>`;
+    grp.items.forEach((item,ii)=>{
+      // Unique ID using group index + item index — no collisions
+      const uid=`dc_${gi}_${ii}`;
+      html+=`<div class="doc-card" id="${uid}">
+        <div class="doc-header" onclick="toggleDoc('${uid}')">
           <div class="doc-icon">${item.icon}</div>
-          <div><div class="doc-title">${item.title}</div><div class="doc-subtitle">${item.subtitle}</div></div>
+          <div><div class="doc-title">${item.t}</div><div class="doc-subtitle">${item.s}</div></div>
           <div class="doc-chevron">⌄</div>
         </div>
         <div class="doc-body">
@@ -925,7 +1049,7 @@ renderDocs();
 function toggleDoc(id){document.getElementById(id).classList.toggle('open');}
 
 // ═══ NOTES ═══
-const NOTES_KEY='japan2026_notes';
+const NOTES_KEY='j26_notes';
 let currentTags=[];
 function loadNotes(){try{return JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');}catch(e){return[];}}
 function saveNotesData(n){try{localStorage.setItem(NOTES_KEY,JSON.stringify(n));}catch(e){}}
@@ -952,7 +1076,6 @@ function removeTag(t){currentTags=currentTags.filter(x=>x!==t);renderCurrentTags
 function renderCurrentTags(){
   document.getElementById('current-tags-display').innerHTML=currentTags.map(t=>`<span class="tag-pill">#${t}<button onclick="removeTag('${t}')">×</button></span>`).join('');
 }
-
 function saveNote(){
   const text=document.getElementById('note-textarea').value.trim();
   if(!text)return;
@@ -968,88 +1091,80 @@ function saveNote(){
   currentTags=[];
   renderCurrentTags();
   renderNotes();
-  document.getElementById('sync-dot').style.background='#F39C12';
-  document.getElementById('sync-label').textContent='Guardando...';
-  setTimeout(()=>{document.getElementById('sync-dot').style.background='#2E7D56';document.getElementById('sync-label').textContent='Guardado';},600);
+  const dot=document.getElementById('sync-dot'),lbl=document.getElementById('sync-label');
+  dot.style.background='#F39C12';lbl.textContent='Guardando...';
+  setTimeout(()=>{dot.style.background='#2E7D56';lbl.textContent='Guardado';},600);
 }
-
 function deleteNote(i){const n=loadNotes();n.splice(i,1);saveNotesData(n);renderNotes();}
-
 function renderNotes(){
   const notes=loadNotes();
   const list=document.getElementById('notes-list');
-  if(notes.length===0){
-    list.innerHTML=`<div class="empty-notes"><div class="emoji">📝</div><p>Todavía no hay notas.<br>¡Escribe la primera cuando lleguéis!</p></div>`;
-    return;
-  }
+  if(notes.length===0){list.innerHTML=`<div class="empty-notes"><div class="emoji">📝</div><p>Todavía no hay notas.<br>¡Escribe la primera cuando lleguéis!</p></div>`;return;}
   list.innerHTML=notes.slice().reverse().map((n,ri)=>{
     const i=notes.length-1-ri;
-    const tagsHtml=n.tags&&n.tags.length>0?`<div class="note-tags-display">${n.tags.map(t=>`<span class="note-tag-chip">#${t}</span>`).join('')}</div>`:'';
+    const tags=n.tags&&n.tags.length>0?`<div class="note-tags-display">${n.tags.map(t=>`<span class="note-tag-chip">#${t}</span>`).join('')}</div>`:'';
     return `<div class="note-card">
       <div class="note-card-header">
         <span class="note-day-label">${n.dayLabel||'General'}</span>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span class="note-date-label">${n.savedAt||''}</span>
-          <button class="note-delete" onclick="deleteNote(${i})">×</button>
-        </div>
+        <div style="display:flex;align-items:center;gap:8px"><span class="note-date-label">${n.savedAt||''}</span><button class="note-delete" onclick="deleteNote(${i})">×</button></div>
       </div>
-      <div class="note-text">${n.text.replace(/\n/g,'<br>')}</div>
-      ${tagsHtml}
+      <div class="note-text">${n.text.replace(/\n/g,'<br>')}</div>${tags}
     </div>`;
   }).join('');
 }
 renderNotes();
 
 // ═══ PHRASES ═══
-const PHRASES_KEY='japan2026_phrases';
+const PHRASES_KEY='j26_phrases';
 const defaultPhrases=[
   {cat:'🙏 Cortesía',phrases:[
-    {es:'Hola (durante el día)',jp:'こんにちは',ro:'Konnichiwa',interactive:false},
-    {es:'Buenos días',jp:'おはようございます',ro:'Ohayou gozaimasu',interactive:false},
-    {es:'Buenas noches',jp:'こんばんは',ro:'Konbanwa',interactive:false},
-    {es:'Muchas gracias',jp:'ありがとうございます',ro:'Arigatou gozaimasu',interactive:false},
-    {es:'Disculpe / Perdona',jp:'すみません',ro:'Sumimasen',interactive:false},
-    {es:'Por favor',jp:'お願いします',ro:'Onegaishimasu',interactive:false},
-    {es:'Lo siento',jp:'ごめんなさい',ro:'Gomen nasai',interactive:false},
-    {es:'De nada',jp:'どういたしまして',ro:'Dou itashimashite',interactive:false},
-    {es:'Buen provecho (antes de comer)',jp:'いただきます',ro:'Itadakimasu',interactive:false},
-    {es:'Gracias por la comida (después)',jp:'ごちそうさまでした',ro:'Gochisousama deshita',interactive:false},
+    {es:'Hola (durante el día)',jp:'こんにちは',ro:'Konnichiwa'},
+    {es:'Buenos días',jp:'おはようございます',ro:'Ohayou gozaimasu'},
+    {es:'Buenas noches',jp:'こんばんは',ro:'Konbanwa'},
+    {es:'Muchas gracias',jp:'ありがとうございます',ro:'Arigatou gozaimasu'},
+    {es:'Disculpe / Perdona',jp:'すみません',ro:'Sumimasen'},
+    {es:'Por favor',jp:'お願いします',ro:'Onegaishimasu'},
+    {es:'Lo siento',jp:'ごめんなさい',ro:'Gomen nasai'},
+    {es:'De nada',jp:'どういたしまして',ro:'Dou itashimashite'},
+    {es:'Buen provecho (antes de comer)',jp:'いただきます',ro:'Itadakimasu'},
+    {es:'Gracias por la comida (después)',jp:'ごちそうさまでした',ro:'Gochisousama deshita'},
   ]},
   {cat:'🚄 Transporte',phrases:[
-    {es:'¿Dónde está la estación?',jp:'すみません、駅はどこですか？',ro:'Sumimasen, eki wa doko desu ka?',interactive:false},
-    {es:'¿Dónde está la parada de bus?',jp:'バス停はどこですか？',ro:'Basutei wa doko desu ka?',interactive:false},
-    {es:'¿Dónde está el baño?',jp:'すみません、トイレはどこですか？',ro:'Sumimasen, toire wa doko desu ka?',interactive:false},
-    {es:'Un billete, por favor',jp:'切符を一枚ください',ro:'Kippu wo ichimai kudasai',interactive:false},
-    {es:'¿Cuánto cuesta?',jp:'いくらですか？',ro:'Ikura desu ka?',interactive:false},
-    {es:'¿Puedo pagar con tarjeta?',jp:'クレジットカードは使えますか？',ro:'Kurejitto kaado wa tsukaemasu ka?',interactive:false},
-    {es:'¿Cómo puedo ir a ___?',jp:'___ にはどうやって行けますか？',ro:'___ ni wa dou yatte ikemasu ka?',interactive:true,placeholder:'Shinjuku, Fushimi Inari...'},
-    {es:'¿Este tren va a ___?',jp:'この電車は ___ に行きますか？',ro:'Kono densha wa ___ ni ikimasu ka?',interactive:true,placeholder:'Tokyo, Kyoto...'},
-    {es:'¿Este bus va a ___?',jp:'このバスは ___ に行きますか？',ro:'Kono basu wa ___ ni ikimasu ka?',interactive:true,placeholder:'Shirakawa-go...'},
+    {es:'¿Dónde está la estación?',jp:'すみません、駅はどこですか？',ro:'Sumimasen, eki wa doko desu ka?'},
+    {es:'¿Dónde está la parada de bus?',jp:'すみません、バス停はどこですか？',ro:'Sumimasen, basutei wa doko desu ka?'},
+    {es:'¿Dónde está el baño?',jp:'すみません、トイレはどこですか？',ro:'Sumimasen, toire wa doko desu ka?'},
+    {es:'Un billete, por favor',jp:'切符を一枚ください',ro:'Kippu wo ichimai kudasai'},
+    {es:'¿Cuánto cuesta?',jp:'すみません、いくらですか？',ro:'Sumimasen, ikura desu ka?'},
+    {es:'¿Puedo pagar con tarjeta?',jp:'クレジットカードは使えますか？',ro:'Kurejitto kaado wa tsukaemasu ka?'},
+    {es:'¿Cómo puedo ir a ___?',jp:'すみません、___にはどうやって行けますか？',ro:'Sumimasen, ___ ni wa dou yatte ikemasu ka?',interactive:true,placeholder:'Shinjuku, Fushimi Inari...'},
+    {es:'¿Este tren va a ___?',jp:'この電車は___に行きますか？',ro:'Kono densha wa ___ ni ikimasu ka?',interactive:true,placeholder:'Tokyo, Kyoto...'},
+    {es:'¿Este bus va a ___?',jp:'このバスは___に行きますか？',ro:'Kono basu wa ___ ni ikimasu ka?',interactive:true,placeholder:'Shirakawa-go...'},
   ]},
   {cat:'🍽️ Restaurante',phrases:[
-    {es:'Una mesa para dos, por favor',jp:'二人です。お願いします',ro:'Futari desu. Onegaishimasu',interactive:false},
-    {es:'La cuenta, por favor',jp:'お会計をお願いします',ro:'Okaikei wo onegaishimasu',interactive:false},
-    {es:'¡Está delicioso!',jp:'おいしいです！',ro:'Oishii desu!',interactive:false},
-    {es:'¿Qué es esto?',jp:'これは何ですか？',ro:'Kore wa nan desu ka?',interactive:false},
-    {es:'Esto, por favor (señalar)',jp:'これをください',ro:'Kore wo kudasai',interactive:false},
+    {es:'Una mesa para dos, por favor',jp:'二人です。お願いします',ro:'Futari desu. Onegaishimasu'},
+    {es:'La cuenta, por favor',jp:'お会計をお願いします',ro:'Okaikei wo onegaishimasu'},
+    {es:'¡Está delicioso!',jp:'おいしいです！',ro:'Oishii desu!'},
+    {es:'Esto, por favor (señalar)',jp:'これをください',ro:'Kore wo kudasai'},
+    {es:'¿Qué es esto?',jp:'これは何ですか？',ro:'Kore wa nan desu ka?'},
   ]},
   {cat:'🥦 Vegana (Emma)',phrases:[
-    {es:'No como carne, pescado, huevos, lácteos ni miel',jp:'私は肉と魚、卵、乳製品、蜂蜜が食べられません',ro:'Watashi wa niku to sakana, tamago, nyuuseihin, hachimitsu ga taberaremasen',interactive:false},
-    {es:'¿Esto contiene huevo?',jp:'これに卵が入っていますか？',ro:'Kore ni tamago ga haitteimasu ka?',interactive:false},
-    {es:'¿Esto contiene caldo de pescado (dashi)?',jp:'これに出汁が入っていますか？',ro:'Kore ni dashi ga haitteimasu ka?',interactive:false},
-    {es:'¿Tienen opciones veganas?',jp:'ビーガン料理はありますか？',ro:'Biigan ryouri wa arimasu ka?',interactive:false},
-    {es:'¿Tienen leche de soja?',jp:'豆乳はありますか？',ro:'Tounyu wa arimasu ka?',interactive:false},
-    {es:'¿Tienen leche de avena?',jp:'オーツミルクはありますか？',ro:'Ootsu miruku wa arimasu ka?',interactive:false},
-    {es:'¿Tienen tofu?',jp:'豆腐はありますか？',ro:'Toufu wa arimasu ka?',interactive:false},
-    {es:'¿Pueden quitar el huevo?',jp:'卵抜きにできますか？',ro:'Tamago nuki ni dekimasu ka?',interactive:false},
-    {es:'¿Pueden quitar la carne?',jp:'肉抜きにできますか？',ro:'Niku nuki ni dekimasu ka?',interactive:false},
+    {es:'No como carne, pescado, huevos, lácteos ni miel',jp:'私は肉と魚、卵、乳製品、蜂蜜が食べられません',ro:'Watashi wa niku to sakana, tamago, nyuuseihin, hachimitsu ga taberaremasen'},
+    {es:'¿Esto contiene huevo?',jp:'これに卵が入っていますか？',ro:'Kore ni tamago ga haitteimasu ka?'},
+    {es:'¿Esto contiene caldo de pescado (dashi)?',jp:'これに出汁が入っていますか？',ro:'Kore ni dashi ga haitteimasu ka?'},
+    {es:'¿Tienen opciones veganas?',jp:'ビーガン料理はありますか？',ro:'Biigan ryouri wa arimasu ka?'},
+    {es:'¿Tienen leche de soja?',jp:'豆乳はありますか？',ro:'Tounyu wa arimasu ka?'},
+    {es:'¿Tienen leche de avena?',jp:'オーツミルクはありますか？',ro:'Ootsu miruku wa arimasu ka?'},
+    {es:'¿Tienen tofu?',jp:'豆腐はありますか？',ro:'Toufu wa arimasu ka?'},
+    {es:'¿Pueden quitar el huevo?',jp:'卵抜きにできますか？',ro:'Tamago nuki ni dekimasu ka?'},
+    {es:'¿Pueden quitar la carne?',jp:'肉抜きにできますか？',ro:'Niku nuki ni dekimasu ka?'},
+    {es:'¿Tienen proteína vegetal?',jp:'植物性タンパク質はありますか？',ro:'Shokubutsusei tanpakushitsu wa arimasu ka?'},
   ]},
   {cat:'🆘 Emergencias',phrases:[
-    {es:'Necesito un médico',jp:'医者が必要です',ro:'Isha ga hitsuyou desu',interactive:false},
-    {es:'Llame a una ambulancia, por favor',jp:'救急車を呼んでください',ro:'Kyuukyuusha wo yonde kudasai',interactive:false},
-    {es:'Me duele el estómago',jp:'お腹が痛いです',ro:'Onaka ga itai desu',interactive:false},
-    {es:'¿Dónde está el hospital?',jp:'すみません、病院はどこですか？',ro:'Sumimasen, byouin wa doko desu ka?',interactive:false},
-    {es:'Soy alérgico/a',jp:'アレルギーがあります',ro:'Arerugii ga arimasu',interactive:false},
+    {es:'Necesito un médico, por favor',jp:'医者が必要です。お願いします',ro:'Isha ga hitsuyou desu. Onegaishimasu'},
+    {es:'Llame a una ambulancia, por favor',jp:'救急車を呼んでください',ro:'Kyuukyuusha wo yonde kudasai'},
+    {es:'¿Dónde está el hospital?',jp:'すみません、病院はどこですか？',ro:'Sumimasen, byouin wa doko desu ka?'},
+    {es:'Me duele el estómago',jp:'お腹が痛いです',ro:'Onaka ga itai desu'},
+    {es:'Soy alérgico/a',jp:'アレルギーがあります',ro:'Arerugii ga arimasu'},
   ]}
 ];
 
@@ -1058,20 +1173,20 @@ function saveCustomPhrases(p){try{localStorage.setItem(PHRASES_KEY,JSON.stringif
 
 function renderPhrases(){
   const custom=loadCustomPhrases();
-  let html='';
   const allCats=[...defaultPhrases];
-  if(custom.length>0) allCats.push({cat:'⭐ Mis frases',phrases:custom});
-
+  if(custom.length>0)allCats.push({cat:'⭐ Mis frases',phrases:custom});
+  let html='';
   allCats.forEach(cat=>{
     html+=`<div class="phrase-group"><div class="section-title">${cat.cat}</div><div class="phrase-list">`;
-    cat.phrases.forEach((p,i)=>{
+    cat.phrases.forEach(p=>{
       const cls=p.interactive?'phrase-card interactive':'phrase-card';
-      html+=`<div class="${cls}" onclick="openPhrase(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+      const pData=encodeURIComponent(JSON.stringify(p));
+      html+=`<div class="${cls}" onclick="openPhrase('${pData}')">
         <div>
           <div class="phrase-es">${p.es}</div>
-          <div class="phrase-preview">${p.jp.substring(0,20)}${p.jp.length>20?'…':''}</div>
+          <div class="phrase-preview">${p.jp.substring(0,18)}${p.jp.length>18?'…':''}</div>
         </div>
-        <div style="display:flex;align-items:center;gap:6px">
+        <div style="display:flex;align-items:center;gap:5px">
           ${p.interactive?'<span style="font-size:10px;color:var(--blue);font-weight:600">✏️</span>':''}
           <div class="phrase-arrow">›</div>
         </div>
@@ -1079,54 +1194,47 @@ function renderPhrases(){
     });
     html+=`</div></div>`;
   });
-
-  html+=`<button class="add-phrase-btn" onclick="openAddModal()"><span style="font-size:20px">+</span> Añadir frase</button>`;
+  html+=`<button class="add-phrase-btn" onclick="openAddPhraseModal()"><span style="font-size:20px">+</span> Añadir frase</button>`;
   document.getElementById('phrases-body').innerHTML=html;
 }
 renderPhrases();
 
 let currentPhrase=null;
-function openPhrase(p){
-  currentPhrase=p;
+function openPhrase(pData){
+  currentPhrase=JSON.parse(decodeURIComponent(pData));
+  const p=currentPhrase;
   const modal=document.getElementById('phrase-modal');
   modal.classList.remove('hidden');
   document.getElementById('pm-label').textContent=p.interactive?'Escribe el lugar:':'Muestra esto:';
   document.getElementById('pm-es').textContent=p.es;
-
   if(p.interactive){
-    document.getElementById('pm-interactive-area').innerHTML=`
-      <input class="phrase-interactive-input" id="interactive-fill" placeholder="${p.placeholder||'Escribe aquí...'}" oninput="updateInteractive()"/>`;
-    updateInteractive();
-  } else {
+    document.getElementById('pm-interactive-area').innerHTML=`<input class="phrase-interactive-input" id="interactive-fill" placeholder="${p.placeholder||'Escribe aquí...'}" oninput="updateInteractive()"/>`;
+    document.getElementById('pm-jp').textContent=p.jp.replace('___','___');
+    document.getElementById('pm-romaji').textContent=p.ro.replace('___','___');
+  }else{
     document.getElementById('pm-interactive-area').innerHTML='';
     document.getElementById('pm-jp').textContent=p.jp;
     document.getElementById('pm-romaji').textContent=p.ro;
   }
 }
-
 function updateInteractive(){
   const val=document.getElementById('interactive-fill')?.value||'';
-  const p=currentPhrase;
-  if(!p)return;
-  const jp=p.jp.replace('___',val||'___');
-  const ro=p.ro.replace('___',val||'___');
-  document.getElementById('pm-jp').textContent=jp;
-  document.getElementById('pm-romaji').textContent=ro;
+  const p=currentPhrase;if(!p)return;
+  document.getElementById('pm-jp').textContent=p.jp.replace('___',val||'___');
+  document.getElementById('pm-romaji').textContent=p.ro.replace('___',val||'___');
 }
-
 function closePhraseModal(){document.getElementById('phrase-modal').classList.add('hidden');}
-
-function openAddModal(){document.getElementById('add-modal').classList.remove('hidden');}
-function closeAddModal(){document.getElementById('add-modal').classList.add('hidden');document.getElementById('af-es').value='';document.getElementById('af-jp').value='';document.getElementById('af-ro').value='';}
+function openAddPhraseModal(){document.getElementById('add-phrase-modal').classList.remove('hidden');}
+function closeAddPhraseModal(){document.getElementById('add-phrase-modal').classList.add('hidden');['af-es','af-jp','af-ro'].forEach(id=>document.getElementById(id).value='');}
 function saveCustomPhrase(){
   const es=document.getElementById('af-es').value.trim();
   const jp=document.getElementById('af-jp').value.trim();
   const ro=document.getElementById('af-ro').value.trim();
   if(!es||!jp)return;
   const custom=loadCustomPhrases();
-  custom.push({es,jp,ro,interactive:false});
+  custom.push({es,jp,ro});
   saveCustomPhrases(custom);
-  closeAddModal();
+  closeAddPhraseModal();
   renderPhrases();
 }
 
