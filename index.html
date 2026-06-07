@@ -181,6 +181,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 .td-green{background:var(--green);}.td-gold{background:var(--gold);}
 .activity-card{background:var(--ink);color:var(--cream);border-radius:12px;padding:13px;}
 .activity-text{font-size:13px;line-height:1.6;}
+.activity-edit-btn{background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:14px;padding:2px 4px;flex-shrink:0;line-height:1;}
+.activity-edit-btn:hover{color:var(--red-light);}
+.activity-textarea{width:100%;background:transparent;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--cream);line-height:1.6;resize:none;min-height:80px;}
+.activity-edit-actions{display:flex;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);}
+.activity-save-btn{background:var(--red);color:white;border:none;border-radius:8px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;}
+.activity-cancel-btn{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);border:none;border-radius:8px;padding:6px 14px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;}
 
 /* DAY PENDING */
 .day-pending-card{background:var(--white);border-radius:12px;padding:12px;border:1px solid var(--sand-dark);}
@@ -856,7 +862,9 @@ function renderDaySummary(){
 
   // Activity short
   if(d.activity){
-    const short=d.activity.split('\n')[0].substring(0,80)+(d.activity.length>80?'…':'');
+    const customAct=loadActivity(dayIdx);
+    const actText=customAct!==null?customAct:d.activity;
+    const short=actText.split('\n')[0].substring(0,80)+(actText.length>80?'…':'');
     rows+=`<div class="ds-card-row"><div class="ds-card-icon">🗺</div><div class="ds-card-text">${short}</div></div>`;
   }
 
@@ -991,8 +999,16 @@ function showDay(i){
   }
 
   if(d.activity){
-    html+=`<div class="detail-section"><div class="ds-title">Actividad del día</div>
-      <div class="activity-card"><div class="activity-text">${d.activity.replace(/\n/g,'<br>')}</div></div></div>`;
+    const customAct=loadActivity(i);
+    const actText=customAct!==null?customAct:d.activity;
+    html+=`<div class="detail-section">
+      <div class="ds-title">Actividad del día
+        <button class="activity-edit-btn" onclick="startEditActivity(${i})" id="edit-btn-${i}" title="Editar">✏️</button>
+      </div>
+      <div class="activity-card" id="activity-card-${i}">
+        <div class="activity-text" id="activity-text-${i}">${actText.replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>`;
   }
 
   // Day notes
@@ -1010,6 +1026,55 @@ function showDay(i){
   showScreen('detail');
 }
 function goBack(){showScreen('itinerary');}
+
+// ═══ ACTIVITY EDITING ═══
+const ACT_KEY='j26_activities';
+function loadActivity(idx){
+  try{
+    const all=JSON.parse(localStorage.getItem(ACT_KEY)||'{}');
+    return all[idx]!==undefined?all[idx]:null;
+  }catch(e){return null;}
+}
+function saveActivity(idx,text){
+  try{
+    const all=JSON.parse(localStorage.getItem(ACT_KEY)||'{}');
+    all[idx]=text;
+    localStorage.setItem(ACT_KEY,JSON.stringify(all));
+  }catch(e){}
+}
+
+function startEditActivity(idx){
+  const card=document.getElementById(`activity-card-${idx}`);
+  const d=days[idx];
+  const customAct=loadActivity(idx);
+  const current=customAct!==null?customAct:d.activity;
+  card.innerHTML=`
+    <textarea class="activity-textarea" id="activity-edit-area-${idx}" rows="6">${current}</textarea>
+    <div class="activity-edit-actions">
+      <button class="activity-save-btn" onclick="saveActivityEdit(${idx})">Guardar</button>
+      <button class="activity-cancel-btn" onclick="cancelActivityEdit(${idx})">Cancelar</button>
+    </div>`;
+  const ta=document.getElementById(`activity-edit-area-${idx}`);
+  ta.focus();
+  ta.setSelectionRange(ta.value.length,ta.value.length);
+}
+
+function saveActivityEdit(idx){
+  const ta=document.getElementById(`activity-edit-area-${idx}`);
+  if(!ta)return;
+  const newText=ta.value.trim();
+  saveActivity(idx,newText);
+  const card=document.getElementById(`activity-card-${idx}`);
+  card.innerHTML=`<div class="activity-text" id="activity-text-${idx}">${newText.replace(/\n/g,'<br>')}</div>`;
+}
+
+function cancelActivityEdit(idx){
+  const d=days[idx];
+  const customAct=loadActivity(idx);
+  const current=customAct!==null?customAct:d.activity;
+  const card=document.getElementById(`activity-card-${idx}`);
+  card.innerHTML=`<div class="activity-text" id="activity-text-${idx}">${current.replace(/\n/g,'<br>')}</div>`;
+}
 
 // ═══ DOCS ═══
 function renderDocs(){
