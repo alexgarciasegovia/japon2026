@@ -328,6 +328,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
       <div class="hero-right">
         <div class="today-date" id="today-date-label"></div>
         <div class="trip-dates">20 jun — 11 jul 2026</div>
+        <div style="font-size:16px;color:var(--red-light);margin-top:6px;font-weight:600;letter-spacing:0.02em;" id="japan-time">🇯🇵 --:--</div>
       </div>
     </div>
   </div>
@@ -486,13 +487,48 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 <script>
 // ═══ PASSWORD ═══
 const PASS='txara';
+const PASS_MAMA='soylamama';
+let readOnly=false;
+
 function checkPassword(){
   const v=document.getElementById('lock-input').value;
-  if(v===PASS){sessionStorage.setItem('j26_auth','1');document.getElementById('lock-screen').classList.add('hidden');}
-  else{const e=document.getElementById('lock-error');e.textContent='Contraseña incorrecta';document.getElementById('lock-input').value='';setTimeout(()=>e.textContent='',2000);}
+  if(v===PASS){
+    sessionStorage.setItem('j26_auth','1');
+    sessionStorage.setItem('j26_ro','0');
+    readOnly=false;
+    document.getElementById('lock-screen').classList.add('hidden');
+  } else if(v===PASS_MAMA){
+    sessionStorage.setItem('j26_auth','1');
+    sessionStorage.setItem('j26_ro','1');
+    readOnly=true;
+    document.getElementById('lock-screen').classList.add('hidden');
+  } else {
+    const e=document.getElementById('lock-error');
+    e.textContent='Contraseña incorrecta';
+    document.getElementById('lock-input').value='';
+    setTimeout(()=>e.textContent='',2000);
+  }
 }
 document.getElementById('lock-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPassword();});
-if(sessionStorage.getItem('j26_auth')==='1')document.getElementById('lock-screen').classList.add('hidden');
+if(sessionStorage.getItem('j26_auth')==='1'){
+  readOnly=sessionStorage.getItem('j26_ro')==='1';
+  document.getElementById('lock-screen').classList.add('hidden');
+}
+
+// READONLY TOAST
+function showReadOnlyMsg(){
+  let toast=document.getElementById('ro-toast');
+  if(!toast){
+    toast=document.createElement('div');
+    toast.id='ro-toast';
+    toast.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1A1410;color:#FAF7F2;padding:12px 20px;border-radius:14px;font-size:13px;font-weight:500;z-index:9000;border:1px solid rgba(232,160,154,0.3);max-width:320px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.4);transition:opacity 0.3s;';
+    document.body.appendChild(toast);
+  }
+  toast.textContent='Hola mamá 💕 no puedes editar esto, te quiero mucho';
+  toast.style.opacity='1';
+  clearTimeout(toast._timer);
+  toast._timer=setTimeout(()=>toast.style.opacity='0',3000);
+}
 
 // ═══ DATES ═══
 const TRIP_START=new Date('2026-06-20');
@@ -507,6 +543,18 @@ function updateCountdown(){
   else{el.textContent=Math.abs(diff);lbl.textContent='días en Japón';}
 }
 updateCountdown();
+
+function updateJapanTime(){
+  const el=document.getElementById('japan-time');
+  if(!el)return;
+  const now=new Date();
+  const jst=new Date(now.toLocaleString('en-US',{timeZone:'Asia/Tokyo'}));
+  const h=String(jst.getHours()).padStart(2,'0');
+  const m=String(jst.getMinutes()).padStart(2,'0');
+  el.textContent=`🇯🇵 ${h}:${m} JST`;
+}
+updateJapanTime();
+setInterval(updateJapanTime,30000);
 
 // ═══ DAYS DATA ═══
 const days=[
@@ -742,6 +790,7 @@ function isTaskDone(id){
 }
 
 function toggleTask(id, andRefreshDay){
+  if(readOnly){showReadOnlyMsg();return;}
   const state=loadTaskState();
   const task=defaultTasks.find(t=>t.id===id);
   // For doneByDefault tasks: if state is undefined they're done, so set to false (pending)
@@ -878,6 +927,7 @@ function renderDaySummary(){
 
 // ADD TASK MODAL
 function openAddTaskModal(){
+  if(readOnly){showReadOnlyMsg();return;}
   const sel=document.getElementById('at-day');
   sel.innerHTML=`<option value="antes">Antes del viaje</option>`;
   days.forEach(d=>{
@@ -892,6 +942,7 @@ function openAddTaskModal(){
 }
 function closeAddTaskModal(){document.getElementById('add-task-modal').classList.add('hidden');}
 function saveNewTask(){
+  if(readOnly){showReadOnlyMsg();return;}
   const title=document.getElementById('at-title').value.trim();
   if(!title)return;
   const desc=document.getElementById('at-desc').value.trim();
@@ -1044,6 +1095,7 @@ function saveActivity(idx,text){
 }
 
 function startEditActivity(idx){
+  if(readOnly){showReadOnlyMsg();return;}
   const card=document.getElementById(`activity-card-${idx}`);
   const d=days[idx];
   const customAct=loadActivity(idx);
@@ -1214,6 +1266,7 @@ function renderCurrentTags(){
   document.getElementById('current-tags-display').innerHTML=currentTags.map(t=>`<span class="tag-pill">#${t}<button onclick="removeTag('${t}')">×</button></span>`).join('');
 }
 function saveNote(){
+  if(readOnly){showReadOnlyMsg();return;}
   const text=document.getElementById('note-textarea').value.trim();
   if(!text)return;
   const sel=document.getElementById('note-day-select');
@@ -1232,7 +1285,7 @@ function saveNote(){
   dot.style.background='#F39C12';lbl.textContent='Guardando...';
   setTimeout(()=>{dot.style.background='#2E7D56';lbl.textContent='Guardado';},600);
 }
-function deleteNote(i){const n=loadNotes();n.splice(i,1);saveNotesData(n);renderNotes();}
+function deleteNote(i){if(readOnly){showReadOnlyMsg();return;}const n=loadNotes();n.splice(i,1);saveNotesData(n);renderNotes();}
 function renderNotes(){
   const notes=loadNotes();
   const list=document.getElementById('notes-list');
@@ -1361,9 +1414,10 @@ function updateInteractive(){
   document.getElementById('pm-romaji').textContent=p.ro.replace('___',val||'___');
 }
 function closePhraseModal(){document.getElementById('phrase-modal').classList.add('hidden');}
-function openAddPhraseModal(){document.getElementById('add-phrase-modal').classList.remove('hidden');}
+function openAddPhraseModal(){if(readOnly){showReadOnlyMsg();return;}document.getElementById('add-phrase-modal').classList.remove('hidden');}
 function closeAddPhraseModal(){document.getElementById('add-phrase-modal').classList.add('hidden');['af-es','af-jp','af-ro'].forEach(id=>document.getElementById(id).value='');}
 function saveCustomPhrase(){
+  if(readOnly){showReadOnlyMsg();return;}
   const es=document.getElementById('af-es').value.trim();
   const jp=document.getElementById('af-jp').value.trim();
   const ro=document.getElementById('af-ro').value.trim();
