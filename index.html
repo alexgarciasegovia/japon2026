@@ -460,7 +460,47 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBMgAql-hkfTgl1wVYAoE7BXmAdPKAj-tE",
+  authDomain: "japon2026-emmaalex.firebaseapp.com",
+  projectId: "japon2026-emmaalex",
+  storageBucket: "japon2026-emmaalex.firebasestorage.app",
+  messagingSenderId: "444304030657",
+  appId: "1:444304030657:web:0007e8499b878009fe4d40"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const DOC = doc(db, 'viaje', 'data');
+
+// Expose db functions globally
+window._fbSave = async function(data) {
+  try {
+    await setDoc(DOC, data, {merge: true});
+  } catch(e) { console.error('Firebase save error:', e); }
+};
+
+window._fbLoad = async function() {
+  try {
+    const snap = await getDoc(DOC);
+    return snap.exists() ? snap.data() : {};
+  } catch(e) { console.error('Firebase load error:', e); return {}; }
+};
+
+window._fbListen = function(callback) {
+  return onSnapshot(DOC, (snap) => {
+    if(snap.exists()) callback(snap.data());
+  });
+};
+
+window._fbReady = true;
+document.dispatchEvent(new Event('fb-ready'));
+</script>
 <nav class="bottomnav">
   <button class="nav-btn active" onclick="showScreen('home')" id="nav-home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -773,9 +813,9 @@ const defaultTasks=[
 ];
 
 function loadTaskState(){try{return JSON.parse(localStorage.getItem(TASK_STATE_KEY)||'{}');}catch(e){return{};}}
-function saveTaskState(s){try{localStorage.setItem(TASK_STATE_KEY,JSON.stringify(s));}catch(e){}}
+function saveTaskState(s){fbSaveTaskState(s);}
 function loadCustomTasks(){try{return JSON.parse(localStorage.getItem(TASKS_KEY)||'[]');}catch(e){return[];}}
-function saveCustomTasks(t){try{localStorage.setItem(TASKS_KEY,JSON.stringify(t));}catch(e){}}
+function saveCustomTasks(t){fbSaveCustomTasks(t);}
 
 function getAllTasks(){
   const custom=loadCustomTasks();
@@ -1078,21 +1118,78 @@ function showDay(i){
 }
 function goBack(){showScreen('itinerary');}
 
-// ═══ ACTIVITY EDITING ═══
+// ═══ FIREBASE SYNC ═══
+const NOTES_KEY='j26_notes';
+const TASKS_KEY='j26_tasks';
+const TASK_STATE_KEY='j26_task_state';
 const ACT_KEY='j26_activities';
+const PHRASES_KEY='j26_phrases';
+
+// Local cache (fallback + speed)
+let _cache = {};
+
+async function fbInit() {
+  const data = await window._fbLoad();
+  _cache = data || {};
+  // Seed localStorage from Firebase
+  if(_cache.notes) try{localStorage.setItem(NOTES_KEY, JSON.stringify(_cache.notes));}catch(e){}
+  if(_cache.taskState) try{localStorage.setItem(TASK_STATE_KEY, JSON.stringify(_cache.taskState));}catch(e){}
+  if(_cache.customTasks) try{localStorage.setItem(TASKS_KEY, JSON.stringify(_cache.customTasks));}catch(e){}
+  if(_cache.activities) try{localStorage.setItem(ACT_KEY, JSON.stringify(_cache.activities));}catch(e){}
+  if(_cache.phrases) try{localStorage.setItem(PHRASES_KEY, JSON.stringify(_cache.phrases));}catch(e){}
+  renderNotes();
+  renderHomePending();
+  renderDaySummary();
+  renderPhrases();
+}
+
+async function fbSaveNotes(notes) {
+  try{localStorage.setItem(NOTES_KEY, JSON.stringify(notes));}catch(e){}
+  if(window._fbReady) window._fbSave({notes});
+}
+async function fbSaveTaskState(state) {
+  try{localStorage.setItem(TASK_STATE_KEY, JSON.stringify(state));}catch(e){}
+  if(window._fbReady) window._fbSave({taskState: state});
+}
+async function fbSaveCustomTasks(tasks) {
+  try{localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));}catch(e){}
+  if(window._fbReady) window._fbSave({customTasks: tasks});
+}
+async function fbSaveActivity(idx, text) {
+  let all = {};
+  try{all = JSON.parse(localStorage.getItem(ACT_KEY)||'{}');}catch(e){}
+  all[idx] = text;
+  try{localStorage.setItem(ACT_KEY, JSON.stringify(all));}catch(e){}
+  if(window._fbReady) window._fbSave({activities: all});
+}
+async function fbSavePhrases(phrases) {
+  try{localStorage.setItem(PHRASES_KEY, JSON.stringify(phrases));}catch(e){}
+  if(window._fbReady) window._fbSave({phrases});
+}
+
+// Listen for real-time changes from other devices
+document.addEventListener('fb-ready', () => {
+  fbInit();
+  window._fbListen((data) => {
+    _cache = data;
+    if(data.notes) try{localStorage.setItem(NOTES_KEY, JSON.stringify(data.notes));}catch(e){}
+    if(data.taskState) try{localStorage.setItem(TASK_STATE_KEY, JSON.stringify(data.taskState));}catch(e){}
+    if(data.customTasks) try{localStorage.setItem(TASKS_KEY, JSON.stringify(data.customTasks));}catch(e){}
+    if(data.activities) try{localStorage.setItem(ACT_KEY, JSON.stringify(data.activities));}catch(e){}
+    if(data.phrases) try{localStorage.setItem(PHRASES_KEY, JSON.stringify(data.phrases));}catch(e){}
+    renderNotes();
+    renderHomePending();
+    renderDaySummary();
+    renderPhrases();
+  });
+});
 function loadActivity(idx){
   try{
     const all=JSON.parse(localStorage.getItem(ACT_KEY)||'{}');
     return all[idx]!==undefined?all[idx]:null;
   }catch(e){return null;}
 }
-function saveActivity(idx,text){
-  try{
-    const all=JSON.parse(localStorage.getItem(ACT_KEY)||'{}');
-    all[idx]=text;
-    localStorage.setItem(ACT_KEY,JSON.stringify(all));
-  }catch(e){}
-}
+function saveActivity(idx,text){fbSaveActivity(idx,text);}
 
 function startEditActivity(idx){
   if(readOnly){showReadOnlyMsg();return;}
@@ -1241,7 +1338,7 @@ function toggleDoc(id){document.getElementById(id).classList.toggle('open');}
 const NOTES_KEY='j26_notes';
 let currentTags=[];
 function loadNotes(){try{return JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');}catch(e){return[];}}
-function saveNotesData(n){try{localStorage.setItem(NOTES_KEY,JSON.stringify(n));}catch(e){}}
+function saveNotesData(n){fbSaveNotes(n);}
 
 function populateDaySelect(){
   const sel=document.getElementById('note-day-select');
@@ -1282,8 +1379,8 @@ function saveNote(){
   renderCurrentTags();
   renderNotes();
   const dot=document.getElementById('sync-dot'),lbl=document.getElementById('sync-label');
-  dot.style.background='#F39C12';lbl.textContent='Guardando...';
-  setTimeout(()=>{dot.style.background='#2E7D56';lbl.textContent='Guardado';},600);
+  dot.style.background='#F39C12';lbl.textContent='Sincronizando...';
+  setTimeout(()=>{dot.style.background='#2E7D56';lbl.textContent='Sincronizado ☁️';},1200);
 }
 function deleteNote(i){if(readOnly){showReadOnlyMsg();return;}const n=loadNotes();n.splice(i,1);saveNotesData(n);renderNotes();}
 function renderNotes(){
@@ -1359,7 +1456,7 @@ const defaultPhrases=[
 ];
 
 function loadCustomPhrases(){try{return JSON.parse(localStorage.getItem(PHRASES_KEY)||'[]');}catch(e){return[];}}
-function saveCustomPhrases(p){try{localStorage.setItem(PHRASES_KEY,JSON.stringify(p));}catch(e){}}
+function saveCustomPhrases(p){fbSavePhrases(p);}
 
 function renderPhrases(){
   const custom=loadCustomPhrases();
